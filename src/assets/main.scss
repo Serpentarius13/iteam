@@ -1,0 +1,22 @@
+@tailwind components;
+@tailwind base;
+@tailwind utilities;
+
+@import "./tailwind/components.scss";
+@import "./utilities.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+html {
+  font-size: 62.5%;
+}
