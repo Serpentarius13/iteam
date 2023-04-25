@@ -2,6 +2,7 @@ import Circle from "@/components/Shared/Absolutes/Circle";
 import Button from "@/components/Shared/Button";
 import Earth from "@/components/Three/Earth";
 import Image from "next/image";
+import Typewriter from "./Shared/Typewriter";
 
 interface IDeveloperProps {
   image: string;
@@ -13,7 +14,7 @@ interface IDeveloperProps {
 const DeveloperPopup = ({ image, imageAlt, name, role }: IDeveloperProps) => {
   return (
     <div className="group flex flex-col items-end cursor-pointer">
-      <div className="opacity-0 group-hover:opacity-100 transition-all flex-col  text-black ">
+      <div className="opacity-0 group-hover:opacity-100 transition-all flex flex-col  text-black ">
         <div className="flex w-[18rem] bg-light-blue  shadow-light-blue">
           <p className="flex-1 text-end p-[0.5rem] text-[1.2rem]">
             {name}
@@ -89,11 +90,11 @@ const robertFox: IDeveloperProps = {
   imageAlt: "A bearded man in glasses and nice shirt",
 };
 
-export default function Test() {
+export default function Header() {
   return (
-    <header className="center w-full h-screen flex  justify-center lg:flex-col">
-      <div className="flex flex-col gap-[3rem] text-white flex-1 text-[3.6rem] justify-center h-full">
-        <h1 className=" uppercase ">Hello world</h1>
+    <header className="center w-full h-screen flex  justify-center lg:flex-col lg:mt-[8rem]">
+      <div className="flex flex-col gap-[3rem] text-white flex-1 text-[3.6rem] justify-center h-full items-start">
+        <Typewriter text="HELLO WORLD" />
 
         <h2>Everything you were looking for is here</h2>
 
@@ -101,7 +102,7 @@ export default function Test() {
           Join
         </Button>
       </div>
-      <div className="max-w-[50%] lg:max-w-[90%] relative  ">
+      <div className="max-w-[50%] lg:max-w-[100%] relative  ">
         <Earth />{" "}
         <div className="absolute top-[45%] left-0">
           <DeveloperPopup {...estherHoward} />

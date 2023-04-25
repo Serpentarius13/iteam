@@ -32,3 +32,45 @@
     @apply opacity-100 translate-x-0;
   }
 }
+
+$width: 28rem;
+
+.typewriter {
+  position: relative;
+
+  width: $width;
+
+  border-right: 5px solid rgba(255, 255, 255, 0.75);
+
+  text-align: start;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Animation */
+.anim-typewriter {
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+    blinkTextCursor 1s steps(44) infinite normal;
+}
+@keyframes typewriter {
+  0% {
+    width: 0;
+  }
+  50% {
+    width: $width;
+  }
+  80% {
+    width: $width;
+  }
+  100% {
+    width: 0;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
