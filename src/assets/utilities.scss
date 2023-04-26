@@ -103,3 +103,7 @@ $width: 28rem;
     transform: rotate(360deg);
   }
 }
+
+.green-loader {
+  @apply border-light-blue;
+}
