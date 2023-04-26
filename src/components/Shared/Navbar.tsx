@@ -100,7 +100,7 @@ export default function Navbar() {
   return (
     <nav
       className={` py-[2.5rem] fixed top-0 z-[100] w-screen transition-all ${
-        isShowingBg && "bg-darkest-blue"
+        isShowingBg && "bg-[#041e2e4d] backdrop-blur-biggy "
       }`}
     >
       <div className="center flex justify-between  items-center">

@@ -21,6 +21,9 @@ module.exports = {
       boxShadow: {
         "light-blue": "0px 0px 4px 3px rgba(148, 248, 255, 0.25);",
       },
+      backdropBlur: {
+        biggy: "6rem",
+      },
     },
     screens: {
       "2xl": { max: "1535px" },
