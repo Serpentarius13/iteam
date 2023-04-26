@@ -49,18 +49,22 @@ $width: 28rem;
 
 /* Animation */
 .anim-typewriter {
-  animation: typewriter 4s steps(44) 1s 1 normal both,
+  animation: typewriter 8s steps(44) 1s normal both infinite,
     blinkTextCursor 1s steps(44) infinite normal;
 }
 @keyframes typewriter {
   0% {
     width: 0;
   }
+  30% {
+    width: $width;
+  }
+
   50% {
     width: $width;
   }
-  80% {
-    width: $width;
+  70% {
+    width: 0;
   }
   100% {
     width: 0;
@@ -74,3 +78,5 @@ $width: 28rem;
     border-right-color: transparent;
   }
 }
+
+

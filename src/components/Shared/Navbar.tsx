@@ -1,7 +1,9 @@
+"use client";
 import { buttonVariants } from "@/components/Shared/Button";
 import Icons from "@/components/Shared/Icons";
 import Logo from "@/components/Shared/Logo";
 import Link from "next/link";
+import { ChangeEvent, useRef } from "react";
 
 type TRouterLink = {
   href: string;
@@ -43,16 +45,37 @@ const NavbarBtns = () => {
 };
 
 const MobileNavbar = () => {
+  const burgerInput = useRef<HTMLInputElement | null>(null);
+
+  function handleCloseBurger() {
+    if (!burgerInput?.current) return;
+    burgerInput.current.checked = false;
+    document.body.style.overflow = "auto";
+  }
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const target = event.target as HTMLInputElement;
+    if (target.checked) {
+      document.body.style.overflow = "hidden";
+    } else document.body.style.overflow = "auto";
+  }
   return (
     <div className="mobile-nav">
       <label className="z-50">
-        <input type="checkbox" className="hidden" />
+        <input
+          type="checkbox"
+          className="hidden"
+          ref={burgerInput}
+          onChange={handleChange}
+        />
         <span />
         <span />
         <span />
       </label>
-
-      <ul className="links w-screen h-screen absolute top-0 left-0 bg-darkest-blue text-white flex flex-col items-center justify-center gap-[3rem] !text-[1.6rem]">
+      <ul
+        onClick={handleCloseBurger}
+        className="links w-screen h-screen fixed top-0 left-0 bg-darkest-blue text-white flex flex-col items-center justify-center gap-[3rem] !text-[1.6rem]"
+      >
         <NavbarLinks />
 
         <li className="flex gap-[2rem]">
@@ -65,7 +88,7 @@ const MobileNavbar = () => {
 
 export default function Navbar() {
   return (
-    <nav className="w-full py-[2.5rem] fixed top-0 z-[100]">
+    <nav className=" py-[2.5rem] fixed top-0 z-[100] w-screen">
       <div className="center flex justify-between  items-center">
         <Logo />
         <ul className="flex items-center gap-[5.4rem] text-white text-[1.2rem] lg:hidden">

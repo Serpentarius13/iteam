@@ -1,29 +1,18 @@
-  <svg
-      width="35"
-      height="35"
-      viewBox="0 0 35 35"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M22.1994 34.3735C18.9467 35.2264 15.5139 35.0982 12.3341 34.005C9.15432 32.9119 6.37002 30.9028 4.33253 28.2312C2.29503 25.5596 1.09563 22.3453 0.885667 18.9938C0.6757 15.6423 1.46457 12.3038 3.15275 9.39945C4.84092 6.49515 7.35276 4.15521 10.3713 2.67487C13.3899 1.19453 16.7799 0.640129 20.1137 1.0816C23.4475 1.52307 26.5756 2.94065 29.1034 5.15546C31.6312 7.37028 33.4454 10.2831 34.3172 13.5264C34.8946 15.6897 35.0391 17.9456 34.7425 20.1648C34.4458 22.384 33.7137 24.523 32.5882 26.4594C31.4626 28.3958 29.9657 30.0915 28.183 31.4495C26.4004 32.8075 24.3671 33.8011 22.1994 34.3735Z"
-        fill="url(#paint0_radial_4_614)"
-        
-      />
-      <defs  >
-        <radialGradient
-          id="paint0_radial_4_614"
-          cx="0"
-          cy="0"
-          r="1"
-      
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(18.1191 17.9709) rotate(74.8489) scale(17.0001 17.0216)"
-        >
-          <stop stop-color="white" />
-          <stop offset="0.26" stop-color="#0088EC" />
-      
-
-        </radialGradient>
-      </defs>
-    </svg>
+<svg width="44" height="43" viewBox="0 0 44 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g style="mix-blend-mode:screen" filter="url(#filter0_f_4_380)">
+<path d="M25.4476 34.2916C22.929 34.9424 20.2739 34.8338 17.8171 33.9794C15.3604 33.125 13.2121 31.5632 11.6433 29.491C10.0745 27.4188 9.15548 24.929 9.00224 22.3358C8.849 19.7426 9.46838 17.1622 10.7822 14.9201C12.0961 12.6781 14.0455 10.8748 16.3846 9.73786C18.7237 8.60092 21.3477 8.18124 23.9254 8.53178C26.5031 8.88232 28.919 9.98738 30.8685 11.7075C32.8179 13.4276 34.2134 15.6858 34.879 18.197C35.327 19.8723 35.438 21.6197 35.2056 23.3381C34.9732 25.0565 34.402 26.7119 33.525 28.2085C32.648 29.7051 31.4825 31.0133 30.0961 32.0574C28.7097 33.1016 27.1297 33.8609 25.4476 34.2916Z" fill="url(#paint0_radial_4_380)" style="mix-blend-mode:screen"/>
+</g>
+<defs>
+<filter id="filter0_f_4_380" x="0.97937" y="0.411499" width="42.3445" height="42.2995" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_4_380"/>
+</filter>
+<radialGradient id="paint0_radial_4_380" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(22.4041 21.6372) rotate(74.8489) scale(13.151 13.1676)">
+<stop stop-color="white"/>
+<stop offset="0.9998" stop-color="#0F8FED"/>
+<stop offset="0.9999" stop-color="#058AEC"/>
+<stop offset="1"/>
+</radialGradient>
+</defs>
+</svg>

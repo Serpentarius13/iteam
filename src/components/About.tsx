@@ -6,6 +6,11 @@ import girl from "../../public/img/about/girl.png";
 import ring from "../../public/img/about/ring.png";
 
 import Links from "@/components/Shared/Absolutes/Links";
+import Aura from "./Shared/Absolutes/Aura";
+import Circle from "./Shared/Absolutes/Circle";
+import LinkCircle from "./Shared/Absolutes/LinkCircle";
+import BigStar from "./Shared/Absolutes/BigStar";
+import Rhombus from "./Shared/Absolutes/Rhombus";
 
 export default function About() {
   return (
@@ -43,7 +48,35 @@ export default function About() {
             alt="A girl with laptop in hands"
             className="absolute max-w-[35%] bottom-[20%] right-[15%]"
           />
+
+          <div className="absolute top-1/2 -translate-y-1/3 -left-[30%] -z-[1] lg:top-1/3 lg:-left-[65%]">
+            <Aura />
+          </div>
         </div>
+      </div>
+
+      <div className="absolute -left-[5%] -top-[22%] -rotate-[20]">
+        <Links />
+      </div>
+
+      <div className="absolute left-0 top-[60%] ">
+        <Rhombus />
+      </div>
+
+      <div className="absolute top-[20%] -translate-y-1/2 left-[55%] -z-[1] -rotate-90">
+        <Links />
+      </div>
+
+      <div className="absolute right-0 top-0 -rotate-45 -z-[1] lg:-top-[15%]">
+        <LinkCircle />
+      </div>
+
+      <div className="absolute top-[60%] right-0">
+        <BigStar />
+      </div>
+
+      <div className="absolute top-[85%] right-[2%]">
+        <Rhombus />
       </div>
     </SectionSkeleton>
   );

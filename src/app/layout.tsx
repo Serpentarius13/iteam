@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${monda.className} bg-darkest-blue`}>
         <Navbar />
-        <main className="my-[8rem] flex flex-col gap-[4rem]">{children}</main>
+        <main className="overflow-x-hidden lg:mt-[12rem] mb-[8rem] flex flex-col gap-[4rem]">{children}</main>
         <Footer />
       </body>
     </html>

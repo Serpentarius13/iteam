@@ -1,5 +1,7 @@
 import SectionSkeleton from "@/components/Shared/SectionSketeton";
 import Image from "next/image";
+import Aura from "./Shared/Absolutes/Aura";
+import BigStar from "./Shared/Absolutes/BigStar";
 
 interface IActionCard {
   icon: string;
@@ -10,8 +12,14 @@ interface IActionCard {
 
 const ActionCard: React.FC<IActionCard> = ({ icon, text, title, iconAlt }) => {
   return (
-    <figure className="flex flex-col gap-[2.4rem] items-center group w-[32rem] cursor-pointer pt-[2rem]">
-      <Image src={icon} alt={iconAlt} width={50} height={28} className="w-[5rem] h-[2.8rem]" />
+    <figure className="flex flex-col gap-[2.4rem] items-center group w-[32rem] cursor-pointer pt-[2rem]  select-none">
+      <Image
+        src={icon}
+        alt={iconAlt}
+        width={50}
+        height={28}
+        className="w-[5rem] h-[2.8rem]"
+      />
 
       <h4 className="font-bold text-white text-[2.4rem]">{title}</h4>
 
@@ -48,7 +56,7 @@ const actionCards: IActionCard[] = [
     icon: "/icons/actions/connection.svg",
     iconAlt: "Mouse connecting to code icon",
     text: "Find your perfect partner to build innovative apps without learning new technologies.",
-    title: "Practice your stuff",
+    title: "Practice your thing",
   },
   {
     icon: "/icons/actions/search.svg",
@@ -65,6 +73,13 @@ export default function Actions() {
         {actionCards.map((card) => (
           <ActionCard {...card} key={card.title} />
         ))}
+      </div>
+
+      <div className="absolute -left-1/3 -top-[75%] -z-[1] lg:bottom-0 lg:top-auto">
+        <Aura />
+      </div>
+      <div className="absolute top-1/2 left-0">
+        <BigStar />
       </div>
     </SectionSkeleton>
   );

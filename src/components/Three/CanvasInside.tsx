@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { extend, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { Box2, TextureLoader } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
@@ -12,14 +12,19 @@ export default function CanvasInside() {
 
   const { setSize, size } = useThree();
 
-  useEffect(() => {
-    setSize(window.innerWidth / 1.2, window.innerHeight / 1.2);
-
-    window.addEventListener('resize', () => {
+  const resize = useCallback(() => {
+    if (window.innerWidth < 900) {
+      setSize(window.innerWidth / 1.2, window.innerHeight * 0.8);
+    } else {
       setSize(window.innerWidth / 1.2, window.innerHeight / 1.2);
-
-    })
+    }
   }, [setSize]);
+
+  useEffect(() => {
+    resize();
+
+    window.addEventListener("resize", resize);
+  }, [resize]);
 
   useFrame(({ clock }) => {
     const a = clock.getElapsedTime();

@@ -3,6 +3,8 @@ import Button from "@/components/Shared/Button";
 import Earth from "@/components/Three/Earth";
 import Image from "next/image";
 import Typewriter from "./Shared/Typewriter";
+import Aura from "./Shared/Absolutes/Aura";
+import Ellipsis from "./Shared/Absolutes/Ellipsis";
 
 interface IDeveloperProps {
   image: string;
@@ -92,7 +94,7 @@ const robertFox: IDeveloperProps = {
 
 export default function Header() {
   return (
-    <header className="center w-full h-screen flex  justify-center lg:flex-col lg:mt-[8rem]">
+    <header className="center relative  w-full h-screen flex  justify-center lg:flex-col lg:mt-[10rem]">
       <div className="flex flex-col gap-[3rem] text-white flex-1 text-[3.6rem] justify-center h-full items-start">
         <Typewriter text="HELLO WORLD" />
 
@@ -102,8 +104,10 @@ export default function Header() {
           Join
         </Button>
       </div>
-      <div className="max-w-[50%] lg:max-w-[100%] relative  ">
-        <Earth />{" "}
+
+      <div className="max-w-[50%] lg:max-w-[100%] h-full relative  flex items-center  ">
+        <Earth />
+
         <div className="absolute top-[45%] left-0">
           <DeveloperPopup {...estherHoward} />
         </div>
@@ -122,6 +126,11 @@ export default function Header() {
         <div className="absolute top-[23%] right-[20%]">
           <DeveloperPopup {...robertFox} />
         </div>
+
+        
+        {/* <div className="absolute-center w-[70vw] h-[65vh] -z-[1]">
+          <Image src="/img/header/bg.svg" alt="Background" fill />
+        </div> */}
       </div>
     </header>
   );
