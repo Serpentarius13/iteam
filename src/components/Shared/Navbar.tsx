@@ -1,5 +1,5 @@
 "use client";
-import { buttonVariants } from "@/components/Shared/Button";
+import { buttonVariants } from "@/components/Shared/Buttons/Button";
 import Icons from "@/components/Shared/Icons";
 import Logo from "@/components/Shared/Logo";
 import Link from "next/link";

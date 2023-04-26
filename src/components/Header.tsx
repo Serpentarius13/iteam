@@ -1,6 +1,6 @@
 
 import Circle from "@/components/Shared/Absolutes/Circle";
-import Button from "@/components/Shared/Button";
+import Button from "@/components/Shared/Buttons/Button";
 import Earth from "@/components/Three/Earth";
 import Image from "next/image";
 import Typewriter from "./Shared/Typewriter";
