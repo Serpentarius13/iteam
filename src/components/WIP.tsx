@@ -86,11 +86,11 @@ const BlogWIP: IWIPCategory = {
 export default function WIP() {
   return (
     <SectionSkeleton title="Work in progress">
-      <div className="flex flex-col gap-[5rem] relative">
+      <div className="flex flex-col gap-[5rem] relative ">
         <WIPCategory {...ChatWIP} />
         <WIPCategory {...ForumWIP} isReverse />
         <WIPCategory {...BlogWIP} />
-        <div className=" w-[105%] h-[102%] px-12 bg-opacity-25 bg-gray-800  absolute-center  rounded-small" />
+        <div className=" w-[105%] h-full px-12 bg-opacity-25 bg-gray-800  absolute-center  rounded-small" />
       </div>
     </SectionSkeleton>
   );
