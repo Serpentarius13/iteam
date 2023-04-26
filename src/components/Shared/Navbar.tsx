@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/Shared/Button";
 import Icons from "@/components/Shared/Icons";
 import Logo from "@/components/Shared/Logo";
 import Link from "next/link";
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 type TRouterLink = {
   href: string;
@@ -87,8 +87,22 @@ const MobileNavbar = () => {
 };
 
 export default function Navbar() {
+  const [isShowingBg, setShowingBg] = useState<boolean>(false);
+  useEffect(() => {
+    document.body.addEventListener("wheel", (e) => {
+      const { scrollY } = window;
+      if (scrollY > 200) {
+        setShowingBg(true);
+      } else setShowingBg(false);
+    });
+  }, []);
+
   return (
-    <nav className=" py-[2.5rem] fixed top-0 z-[100] w-screen">
+    <nav
+      className={` py-[2.5rem] fixed top-0 z-[100] w-screen transition-all ${
+        isShowingBg && "bg-darkest-blue"
+      }`}
+    >
       <div className="center flex justify-between  items-center">
         <Logo />
         <ul className="flex items-center gap-[5.4rem] text-white text-[1.2rem] lg:hidden">

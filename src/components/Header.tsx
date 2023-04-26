@@ -1,3 +1,4 @@
+
 import Circle from "@/components/Shared/Absolutes/Circle";
 import Button from "@/components/Shared/Button";
 import Earth from "@/components/Three/Earth";
@@ -5,6 +6,10 @@ import Image from "next/image";
 import Typewriter from "./Shared/Typewriter";
 import Aura from "./Shared/Absolutes/Aura";
 import Ellipsis from "./Shared/Absolutes/Ellipsis";
+import LinkCircle from "./Shared/Absolutes/LinkCircle";
+import BigStar from "./Shared/Absolutes/BigStar";
+import Rhombus from "./Shared/Absolutes/Rhombus";
+import { useEffect, useRef, useState } from "react";
 
 interface IDeveloperProps {
   image: string;
@@ -93,8 +98,12 @@ const robertFox: IDeveloperProps = {
 };
 
 export default function Header() {
+ 
   return (
-    <header className="center relative  w-full h-screen flex  justify-center lg:flex-col lg:mt-[10rem]">
+    <header
+      className='center relative  w-full h-screen flex  justify-center lg:flex-col lg:mt-[10rem]  transition-all'
+  
+    >
       <div className="flex flex-col gap-[3rem] text-white flex-1 text-[3.6rem] justify-center h-full items-start">
         <Typewriter text="HELLO WORLD" />
 
@@ -105,9 +114,27 @@ export default function Header() {
         </Button>
       </div>
 
-      <div className="max-w-[50%] lg:max-w-[100%] h-full relative  flex items-center  ">
+      <div className="max-w-[50%] h-full relative  flex items-center   lg:max-w-[100%] lg:-translate-y-[7rem]  ">
         <Earth />
+        <Image
+          src="/img/header/stars.svg"
+          alt="Stars"
+          width={1000}
+          height={600}
+          className="absolute -z-[10] w-full h-full"
+        />
 
+        <div className="absolute-center -z-[10]">
+          <Aura />
+        </div>
+
+        <div className="absolute left-0 top-1/2">
+          <BigStar />
+        </div>
+
+        <div className="absolute bottom-0 right-1/2">
+          <Rhombus />
+        </div>
         <div className="absolute top-[45%] left-0">
           <DeveloperPopup {...estherHoward} />
         </div>
@@ -127,7 +154,6 @@ export default function Header() {
           <DeveloperPopup {...robertFox} />
         </div>
 
-        
         {/* <div className="absolute-center w-[70vw] h-[65vh] -z-[1]">
           <Image src="/img/header/bg.svg" alt="Background" fill />
         </div> */}
