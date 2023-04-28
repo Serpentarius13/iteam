@@ -1,4 +1,10 @@
-import React, { KeyboardEventHandler, useRef, useState } from "react";
+import React, {
+  KeyboardEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ClickAwayListener from "react-click-away-listener";
 import { Transition } from "react-transition-group";
 
@@ -33,54 +39,75 @@ export default function Select({
 
   const nodeRef = useRef(null);
 
+  const selectRef = useRef<HTMLDivElement | null>(null);
+
   function openSelect() {
     setIsOpened((state) => !state);
   }
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
-    e.preventDefault();
-    console.log(e.key);
-    if (e.key == "ArrowDown") {
-      const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
+  const handleKeyDown = useCallback(
+    (e: any) => {
+      if (!selectRef.current || !document.activeElement) return;
+      if (
+        !selectRef.current.contains(document.activeElement) ||
+        ![...selectRef.current.children].includes(document.activeElement)
+      )
+        return;
+      e.preventDefault();
 
-      if (foundIx || foundIx == 0) {
-        const nextIndex = foundIx + 1;
-        console.log(nextIndex);
-        if (nextIndex == arrayOfOptions.length) {
-          handleChange(arrayOfOptions[0]);
-          console.log("is");
-        } else {
-          console.log("isnt");
-          handleChange(arrayOfOptions[nextIndex]);
+      if (e.key == "ArrowDown") {
+        const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
+
+        if (foundIx || foundIx == 0) {
+          const nextIndex = foundIx + 1;
+
+          if (nextIndex == arrayOfOptions.length) {
+            handleChange(arrayOfOptions[0]);
+          } else {
+            handleChange(arrayOfOptions[nextIndex]);
+          }
         }
       }
-    }
 
-    if (e.key == "ArrowUp") {
-      const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
+      if (e.key == "ArrowUp") {
+        const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
 
-      if (foundIx || foundIx == 0) {
-        const prevIndex = foundIx - 1;
+        if (foundIx || foundIx == 0) {
+          const prevIndex = foundIx - 1;
 
-        if (prevIndex < 0) {
-          handleChange(arrayOfOptions[arrayOfOptions.length - 1]);
-        } else {
-          handleChange(arrayOfOptions[prevIndex]);
+          if (prevIndex < 0) {
+            handleChange(arrayOfOptions[arrayOfOptions.length - 1]);
+          } else {
+            handleChange(arrayOfOptions[prevIndex]);
+          }
         }
       }
-    }
-  }
+
+      if (e.key == "Enter") {
+        setIsOpened(false);
+      }
+    },
+    [arrayOfOptions, currentOption, handleChange]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
   return (
     <ClickAwayListener onClickAway={() => setIsOpened(false)}>
       <div
-        className="w-full flex flex-col rounded-small bg-white relative  select-none"
+        className="w-full flex flex-col rounded-small bg-white relative  select-none "
         aria-haspopup="listbox"
         aria-expanded={isOpened}
         aria-labelledby="select-label"
-        onKeyDown={handleKeyDown}
+        ref={selectRef}
       >
         <button
-          className="flex "
+          className="flex outline-none border-none"
           onClick={openSelect}
           type="button"
           aria-controls="select-list"
