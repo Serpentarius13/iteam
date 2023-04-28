@@ -40,10 +40,11 @@ model User {
   name          String?
   email         String?   @unique
   emailVerified DateTime?
+  verified Boolean @default(false)
   image         String?
   accounts      Account[]
   sessions      Session[]
-  fields Field[]
+  fields FieldRelation[]
   profession String?
   password String?
 }
@@ -56,7 +57,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Field {
+model FieldRelation {
   id Int @id @default(autoincrement())
   userId String
   fieldId Int
@@ -67,5 +68,5 @@ model Field {
 model Fields {
   id Int @id @default(autoincrement())
   fieldName String
-  fields Field[]
+  fields FieldRelation[]
 }

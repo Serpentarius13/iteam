@@ -11,13 +11,14 @@ interface IBody {
 
 export async function POST(request: Request) {
   try {
+    const nodemailer = require("nodemailer");
     const body = (await request.json()) as IBody;
     const { name, email, password, image } = body;
 
     if (!name || !email || !password || !image)
       return new Response("Not enough data", { status: 422 });
 
-    const newUser: Partial<User> = {
+    const newUser: Partial<User> | any = {
       name,
       email,
       password,

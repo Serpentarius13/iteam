@@ -18,6 +18,10 @@ export default function Test() {
 
   const { data, status } = useSession();
 
+  useEffect(() => {
+    if (data) fetch("/api/send-email");
+  }, [data]);
+
   console.log(data);
 
   // async function getUser() {
@@ -47,11 +51,9 @@ export default function Test() {
 
   // });
 
-  function signInn() {
-    signIn("github");
-  }
+ 
   return (
-    <Button variant="default" onClick={signInn} className="mt-[10rem]">
+    <Button variant="default" onClick={() => signIn('github')} className="mt-[10rem]">
       {" "}
       Войти с Github{" "}
     </Button>

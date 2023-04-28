@@ -75,13 +75,10 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      const fields = await prisma?.field.findMany({
+      const fields = await prisma?.fieldRelation.findMany({
         where: { userId: dbUser.id },
         include: { field: true },
       });
-
-      const checkFields = await prisma?.field.count();
-      console.log(checkFields);
 
       return {
         id: dbUser.id,

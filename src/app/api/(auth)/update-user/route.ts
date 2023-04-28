@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma-db";
 import { getSession } from "next-auth/react";
 import { getToken } from "next-auth/jwt";
 import { authOptions } from "@/lib/auth";
-import { Field, Fields } from "@prisma/client";
+import { Fields } from "@prisma/client";
 
 export async function POST(request: Request | any) {
   try {
@@ -22,12 +22,14 @@ export async function POST(request: Request | any) {
     if (!profession || profession?.length === 0)
       return new Response("No profession was provided", { status: 400 });
 
-    await prisma.field.createMany({
+    await prisma.fieldRelation.createMany({
       data: fields.map((field) => ({
         userId: session.user.id,
         fieldId: field.id,
       })),
     });
+
+  
 
     delete session.user.fields;
 
@@ -41,3 +43,5 @@ export async function POST(request: Request | any) {
     return new Response(error.message, { status: 400 });
   }
 }
+
+

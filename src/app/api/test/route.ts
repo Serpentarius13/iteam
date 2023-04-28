@@ -1,16 +1,9 @@
 import { getAllUserFields } from "@/features/services/fields";
-import { Field } from "@prisma/client";
+
 import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const userId = "123";
-
-    const field: Field | any = {
-      fieldId: 1,
-      userId: "123",
-    };
-
     const allFields = await prisma?.fields.findMany();
 
     const users = await prisma?.user.findMany();
@@ -20,12 +13,12 @@ export async function GET() {
 
     await Promise.all(
       allFields!.map(async (field) => {
-        const newField: Field | any = {
+        const newField = {
           fieldId: field.id,
           userId: users[0].id,
         };
 
-        await prisma?.field.create({ data: newField });
+        await prisma?.fieldRelation.create({ data: newField });
       })
     );
 

@@ -13,7 +13,7 @@ export async function getAllUserFields(userId: string) {
   //     });
   // }
 
-  return await prisma?.field.findMany({
+  return await prisma?.fieldRelation.findMany({
     where: { userId },
     include: { field: true },
   });
