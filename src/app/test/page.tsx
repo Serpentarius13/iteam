@@ -1,61 +1,32 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
 
-import Button from "@/components/Shared/Buttons/Button";
-import { useEffect } from "react";
-import { fetchRedis } from "@/lib/fetchRedis";
-import { db } from "@/lib/db";
-import prisma from "@/lib/prisma-db";
+import Select from "@/components/Shared/Form/Select";
+import { useState } from "react";
 
 export default function Test() {
-  async function loginWithGithub() {
-    try {
-      await signIn("github");
-    } catch (error) {
-      console.log(error);
-    }
+  const [current, setCurrent] = useState<string | null>(null);
+
+  const arrayOfOptions = [
+    "Front-end",
+    "Backend",
+    "Design",
+    "DevOPS",
+    "QA Assurance",
+  ];
+
+  function handleChange(option: string) {
+    setCurrent(option);
   }
-
-  const { data, status } = useSession();
-
-  useEffect(() => {
-    if (data) fetch("/api/send-email");
-  }, [data]);
-
-  console.log(data);
-
-  // async function getUser() {
-  //   await fetch("/api/updateUser", {
-  //     method: "POST",
-  //     body: JSON.stringify({ fields: ["Vue"], profession: "frontend" }),
-  //   });
-  // }
-  // useEffect(() => {
-  //   console.log(data, status);
-
-  //   if (data) {
-  //     getUser();
-  //   }
-  // }, [data, status]);
-
-  // fetch("/api/register", {
-  //   method: "POST",
-  //   body: JSON.stringify({
-  //     name: "abobus",
-  //     password: "abobus",
-  //     email: "abobusik@mail.ru",
-  //     image: "image",
-  //   }),
-  // }).then(async (res) => {
-  //   console.log(res);
-
-  // });
-
- 
   return (
-    <Button variant="default" onClick={() => signIn('github')} className="mt-[10rem]">
-      {" "}
-      Войти с Github{" "}
-    </Button>
+    <main className="h-screen w-screen flex items-center justify-center">
+      <form className="max-w-[90vw] w-[35rem]">
+        <Select
+          currentOption={current}
+          arrayOfOptions={arrayOfOptions}
+          handleChange={handleChange}
+          placeholder="Profession"
+        />
+      </form>
+    </main>
   );
 }

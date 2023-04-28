@@ -47,6 +47,7 @@ model User {
   fields FieldRelation[]
   profession String?
   password String?
+  role String @default("member")
 }
 
 model VerificationToken {

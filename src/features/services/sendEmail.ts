@@ -1,15 +1,17 @@
 export function makeVerificationTemplate(userId: string) {
-  const baseUrl = window.location.origin;
+  const baseUrl =
+    process.env.NODE_ENV == "production"
+      ? "http://iteam.vercel.app"
+      : "http://localhost:8080";
   const link = `${baseUrl}/api/verify/${userId}`;
 
   return `<div
   style="
     background-color: #041d2d;
     padding: 1rem;
-    display: flex;
-    flex-direction: column;
-  "
->
+  ">
+<div style="max-width: 800px; display: flex; flex-direction: column;">
+
   <h1 style="font-size: 3rem; color: #75d9ff; font-weight: bold">
     Thanks for choosing our service!
   </h1>
@@ -22,15 +24,13 @@ export function makeVerificationTemplate(userId: string) {
     href="%LINK%"
     style="
       background-color: #94f8ff;
-      color: white;
-      :hover {
-        background-color: '#281DC4';
-      }
+      color: black;
       padding: 1rem 2rem;
-    "
-  >
+      width: fit-content;
+    ">
     Confirm
   </a>
+  </div>
 </div>`.replace("%LINK%", link);
 }
 
@@ -47,8 +47,10 @@ export function sendEmail(template: string, email: string) {
     },
   });
 
+  console.log(email);
+
   const MailOptions = {
-    from: "Iteam",
+    from: "dreamworkshop1313@gmail.com",
     to: email,
     subject: "Iteam email confirmation letter",
     html: template,

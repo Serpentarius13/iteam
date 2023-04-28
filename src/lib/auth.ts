@@ -124,8 +124,8 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(session);
     },
     redirect({ url, baseUrl }) {
-      console.log(url, baseUrl);
-      return "/test";
+      if (!url.includes("/login")) return "/finish";
+      else return "/profile";
     },
   },
 };

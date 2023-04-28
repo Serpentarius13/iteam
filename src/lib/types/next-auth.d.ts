@@ -20,4 +20,6 @@ declare module "next-auth" {
   interface User extends AuxilaryFields {}
 }
 
+type TRole = 'member' | 'admin  '
+
 

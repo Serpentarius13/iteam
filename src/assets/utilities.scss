@@ -81,18 +81,24 @@ $width: 28rem;
 
 .lds-dual-ring {
   display: inline-block;
-  width: 90%;
-  height: 90%;
+  width: 80px;
+  height: 80px;
+
+  max-width: 100%;
+  max-height: 100%;
 }
 .lds-dual-ring:after {
   content: " ";
   display: block;
-  width: 80%;
-  height: 80%;
+  width: 64px;
+  height: 64px;
 
+  max-width: 80%;
+  max-height: 80%;
+  margin: 8px;
   border-radius: 50%;
-  border: 3px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border: 6px solid #75D9FF;
+  border-color: #75D9FF transparent #75D9FF transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
@@ -104,6 +110,3 @@ $width: 28rem;
   }
 }
 
-.green-loader {
-  @apply border-light-blue;
-}

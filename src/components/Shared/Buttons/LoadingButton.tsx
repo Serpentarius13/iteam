@@ -1,4 +1,4 @@
-import Loader from "../Loader";
+import Loader from "../Load/Loader";
 import Button from "./Button";
 
 interface ILoadingButtonProps {

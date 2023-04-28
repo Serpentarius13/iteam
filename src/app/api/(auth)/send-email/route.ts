@@ -2,14 +2,13 @@ import {
   makeVerificationTemplate,
   sendEmail,
 } from "@/features/services/sendEmail";
+import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
-export async function GET(
-  request: Request,
-
-) {
+export async function GET(request: Request) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
+
     sendEmail(
       makeVerificationTemplate(session!.user.id),
       session!.user.email as string
@@ -17,6 +16,7 @@ export async function GET(
 
     return new Response("Ok");
   } catch (error: any) {
+    console.log(error);
     return new Response("Error sending email", {
       status: 400,
       statusText: error?.message,
