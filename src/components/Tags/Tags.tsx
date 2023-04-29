@@ -19,7 +19,6 @@ export default function Tags({
   return (
     <ul className="flex flex-wrap gap-[1rem]">
       {allTags.map((tag) => {
-        const isChecked = checkInTags(tag) as unknown as boolean;
         return (
           <li key={tag.id}>
             <label>

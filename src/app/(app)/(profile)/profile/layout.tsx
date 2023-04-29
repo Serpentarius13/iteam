@@ -170,7 +170,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <span>{data?.user.email} </span>
               {!data?.user.verified && (
                 <div title="Verify your email">
-                  <div className="absolute top-1/2 -translate-y-1/2 -right-1/2 w-fit p-[1rem] bg-darkest-blue border-2 border-solid border-light-blue hidden group-hover:flex">
+                  <div className="absolute top-1/2 -translate-y-1/2 -right-1/3 w-fit p-[1rem] bg-darkest-blue border-2 border-solid border-light-blue hidden group-hover:flex">
                     <LoadingButton
                       onClick={sendEmail}
                       text="Send email"

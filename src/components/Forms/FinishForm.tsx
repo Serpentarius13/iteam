@@ -17,11 +17,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import professions from "@/features/constants/professions";
 import countries from "@/features/constants/countries";
+import useTags from "@/features/hooks/useTags";
 
 export default function FinishForm() {
   const [profession, setProfession] = useState<string | null>(null);
   const [country, setCountry] = useState<string | null>(null);
-  const [initialTags, setInitialTags] = useState<TTag[]>([]);
+  const { tags: initialTags, handleAddTag } = useTags([]);
 
   const { data: tags, isLoading } = useQuery({
     queryKey: ["tags"],
@@ -69,16 +70,6 @@ export default function FinishForm() {
   const handleChange = (option: string) => void setProfession(option);
   const handleChangeCountry = (option: string) => void setCountry(option);
 
-  function handleAddTag(tag: TTag) {
-    setInitialTags((tags) => {
-      if (tags.includes(tag)) {
-        return tags.filter((el) => el.fieldName != tag.fieldName);
-      } else {
-        return [...tags, tag];
-      }
-    });
-  }
-
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!profession) return toaster.warning("Select your profession");
@@ -119,7 +110,6 @@ export default function FinishForm() {
             handleChange={handleChange}
             placeholder="Profession"
           />
-      
           <h3 className="form-title">Your country</h3>
           <Select
             currentOption={country}
@@ -127,7 +117,7 @@ export default function FinishForm() {
             handleChange={handleChangeCountry}
             placeholder="Country"
           />
-              <h3 className="form-title">What tech are you into?</h3>
+          <h3 className="form-title">What tech are you into?</h3>
           {isLoading ? (
             <LoadingScreen isLoading={isLoading} />
           ) : (
