@@ -1,8 +1,5 @@
 export function makeVerificationTemplate(userId: string) {
-  const baseUrl =
-    process.env.NODE_ENV == "production"
-      ? "http://iteam.vercel.app"
-      : "http://localhost:8080";
+  const baseUrl = window.location.origin;
   const link = `${baseUrl}/api/verify/${userId}`;
 
   return `<div
@@ -53,7 +50,6 @@ export async function sendEmail(template: string, email: string) {
     subject: "Iteam email confirmation letter",
     html: template,
   };
-
 
   return await transport.sendMail(MailOptions, (err: any, info: any) => {
     if (err) {

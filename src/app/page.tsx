@@ -6,11 +6,11 @@ import { Metadata } from "next";
 
 export default function Home() {
   return (
-    <>
+    <div className="lg:mt-[12rem] mb-[8rem]">
       <Header />
       <About />
       <Actions />
       <WIP />
-    </>
+    </div>
   );
 }
