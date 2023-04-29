@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { ErrorIcon } from "react-hot-toast";
 import Button from "../components/Shared/Buttons/Button";
@@ -15,7 +15,7 @@ export default function Error({
       <ErrorIcon />
 
       <p className="text-[2rem] font-bold text-red-500">
-        Sorry, there was an error {error.message}
+        Sorry, there was an error <br />  {error.message}
       </p>
 
       <Button variant="default" onClick={() => reset()}>

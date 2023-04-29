@@ -5,10 +5,7 @@ import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 
 export async function middleware(request: NextRequest | any) {
-  const session =
-    process.env.NODE_ENV == "development"
-      ? await getToken({ req: request })
-      : await getServerSession(authOptions);
+  const session = await getToken({ req: request });
 
   if (!session && request.url.includes("/profile")) {
     return NextResponse.redirect(new URL("/login", request.url));

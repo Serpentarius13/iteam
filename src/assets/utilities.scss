@@ -97,8 +97,8 @@ $width: 28rem;
   max-height: 80%;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #75D9FF;
-  border-color: #75D9FF transparent #75D9FF transparent;
+  border: 6px solid #75d9ff;
+  border-color: #75d9ff transparent #75d9ff transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
@@ -110,4 +110,19 @@ $width: 28rem;
   }
 }
 
+.avatar {
+  &::after {
+    content: "Click here";
+    @apply w-full h-full absolute top-0 left-0
+      rounded-[14rem] border-dashed border-8 p-[1rem] border-light-blue items-center justify-center
+      bg-light-gray bg-opacity-70 text-black text-[1.4rem] uppercase hidden z-[10];
 
+    &:hover {
+      @apply flex;
+    }
+  }
+
+  &:hover + &::after {
+    @apply flex;
+  }
+}

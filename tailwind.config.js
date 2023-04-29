@@ -14,6 +14,7 @@ module.exports = {
         blue: "#0088EC",
         "light-blue": "#75D9FF",
         "lightest-blue": "#94F8FF",
+        "light-gray": '#B3B3B3'
       },
       borderRadius: {
         small: "2px",
