@@ -1,13 +1,9 @@
 import { getServerSession } from "next-auth";
 
 import prisma from "@/lib/prisma-db";
-import { getSession } from "next-auth/react";
-import { getToken } from "next-auth/jwt";
+
 import { authOptions } from "@/lib/auth";
 import { Fields } from "@prisma/client";
-import { redirect } from "next/navigation";
-
-import prisma from "@/lib/prisma-db";
 
 export async function POST(request: Request | any) {
   const session = await getServerSession(authOptions);
@@ -38,10 +34,8 @@ export async function POST(request: Request | any) {
       }),
     ]);
 
-    
     return new Response("Ok");
   } catch (error) {
     return new Response("Error with the database", { status: 500 });
   }
-
 }
