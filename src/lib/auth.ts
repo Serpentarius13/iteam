@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     //@ts-ignore
     async jwt({ token, user }) {
-      const dbUser = await client.user.findUnique({
+      const dbUser = await prisma?.user.findUnique({
         where: { id: token.sub || token.id },
       });
 
