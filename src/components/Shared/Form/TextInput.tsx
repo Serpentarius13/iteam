@@ -1,5 +1,3 @@
-
-
 import { EyeOffIcon, EyeIcon } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { RegisterOptions } from "react-hook-form";
@@ -9,12 +7,13 @@ import { CSSTransition, Transition } from "react-transition-group";
 type TInputType = "text" | "password";
 
 interface ITextInputProps {
-  register: any;
+  register?: any;
   placeholder: string;
   error: string | undefined;
   isTextArea?: boolean;
   type?: TInputType;
   onChange?: () => any;
+  initialValue?: string;
 }
 
 export default function TextInput({
@@ -24,6 +23,7 @@ export default function TextInput({
   isTextArea = false,
   type,
   onChange,
+  initialValue = "",
 }: ITextInputProps) {
   const [inputType, setType] = useState<TInputType>(type ?? "text");
 
@@ -68,6 +68,7 @@ export default function TextInput({
             className={inputClassName}
             placeholder={placeholder}
             onChange={onChange}
+            defaultValue={initialValue}
           />
         ) : (
           <input
@@ -76,6 +77,7 @@ export default function TextInput({
             className={inputClassName}
             placeholder={placeholder}
             onChange={onChange}
+            defaultValue={initialValue}
           />
         )}
 

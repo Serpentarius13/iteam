@@ -15,6 +15,7 @@ import { User } from "next-auth";
 import EmailLinks from "./EmailLinks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import professions from "@/features/constants/professions";
 
 export default function FinishForm() {
   const [profession, setProfession] = useState<string | null>(null);
@@ -62,13 +63,7 @@ export default function FinishForm() {
     },
   });
 
-  const arrayOfOptions = [
-    "Front-end",
-    "Backend",
-    "Design",
-    "DevOPS",
-    "QA Assurance",
-  ];
+  
 
   function handleChange(option: string) {
     setProfession(option);
@@ -119,7 +114,7 @@ export default function FinishForm() {
         <>
           <Select
             currentOption={profession}
-            arrayOfOptions={arrayOfOptions}
+            arrayOfOptions={professions}
             handleChange={handleChange}
             placeholder="Profession"
           />
