@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma-db";
 
 import { authOptions } from "@/lib/auth";
-import { Fields } from "@prisma/client";
+import { Fields, User } from "@prisma/client";
 
 export async function POST(request: Request | any) {
   const session = await getServerSession(authOptions);
@@ -11,7 +11,11 @@ export async function POST(request: Request | any) {
 
   const body = await request.json();
 
-  const { fields, profession }: { fields: Fields[]; profession: string } = body;
+  const {
+    fields,
+    profession,
+    country,
+  }: { fields: Fields[]; profession: string; country: string } = body;
 
   if (!fields || fields?.length === 0)
     return new Response("No fields were provided", { status: 400 });
@@ -19,8 +23,12 @@ export async function POST(request: Request | any) {
   if (!profession || profession?.length === 0)
     return new Response("No profession was provided", { status: 400 });
 
+  if (!country || country.length === 0)
+    return new Response("No country was provided", { status: 400 });
+
   try {
-    delete session.user.fields;
+
+    delete session.user.fields
     await prisma?.$transaction([
       prisma?.fieldRelation.createMany({
         data: fields.map((field) => ({
@@ -29,13 +37,14 @@ export async function POST(request: Request | any) {
         })),
       }),
       prisma?.user.update({
-        where: { id: session?.user.id },
-        data: { ...(session!.user as any), profession, verified: true },
+        where: { id: session.user.id },
+        data: { ...(session!.user as User), profession, country },
       }),
     ]);
 
     return new Response("Ok");
   } catch (error) {
+    console.log(error);
     return new Response("Error with the database", { status: 500 });
   }
 }

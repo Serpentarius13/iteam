@@ -1,5 +1,8 @@
 export function makeVerificationTemplate(userId: string) {
-  const baseUrl = window.location.origin;
+  const baseUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:8080"
+      : "https://iteam.vercel.app";
   const link = `${baseUrl}/api/verify/${userId}`;
 
   return `<div

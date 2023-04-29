@@ -16,9 +16,13 @@ import EmailLinks from "./EmailLinks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import professions from "@/features/constants/professions";
+import countries from "@/features/constants/countries";
 
 export default function FinishForm() {
   const [profession, setProfession] = useState<string | null>(null);
+  const [country, setCountry] = useState<string | null>(null);
+  const [initialTags, setInitialTags] = useState<TTag[]>([]);
+
   const { data: tags, isLoading } = useQuery({
     queryKey: ["tags"],
     queryFn: async () => {
@@ -30,8 +34,6 @@ export default function FinishForm() {
     },
   });
 
-  const [initialTags, setInitialTags] = useState<TTag[]>([]);
-
   const {
     mutate,
     isSuccess,
@@ -42,6 +44,7 @@ export default function FinishForm() {
       return await axios.post("/api/update-user", {
         profession: profession,
         fields: initialTags,
+        country,
       });
     },
     async onSuccess() {
@@ -51,7 +54,7 @@ export default function FinishForm() {
       try {
         await fetch("/api/send-email");
         console.log("sent");
-        toaster.success('Sent your email')
+        toaster.success("Sent your email");
       } catch (error) {
         toaster.error("There was an error sending your email");
       }
@@ -63,11 +66,8 @@ export default function FinishForm() {
     },
   });
 
-  
-
-  function handleChange(option: string) {
-    setProfession(option);
-  }
+  const handleChange = (option: string) => void setProfession(option);
+  const handleChangeCountry = (option: string) => void setCountry(option);
 
   function handleAddTag(tag: TTag) {
     setInitialTags((tags) => {
@@ -82,6 +82,7 @@ export default function FinishForm() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!profession) return toaster.warning("Select your profession");
+    if (!country) return toaster.warning("Select country please!");
 
     if (initialTags.length === 0)
       return toaster.warning("Please select at least one tech");
@@ -118,7 +119,15 @@ export default function FinishForm() {
             handleChange={handleChange}
             placeholder="Profession"
           />
-          <h3 className="form-title">What tech are you into?</h3>
+      
+          <h3 className="form-title">Your country</h3>
+          <Select
+            currentOption={country}
+            arrayOfOptions={countries}
+            handleChange={handleChangeCountry}
+            placeholder="Country"
+          />
+              <h3 className="form-title">What tech are you into?</h3>
           {isLoading ? (
             <LoadingScreen isLoading={isLoading} />
           ) : (

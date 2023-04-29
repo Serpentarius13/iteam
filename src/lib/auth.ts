@@ -30,6 +30,8 @@ function getCredentials(prefix: string) {
 
 const prisma = new PrismaClient();
 
+import { getServerSession } from "next-auth";
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
 
@@ -95,6 +97,7 @@ export const authOptions: NextAuthOptions = {
         profession: dbUser.profession,
         fields,
         verified: dbUser.verified,
+        country: dbUser.country,
       };
 
       // const dbUserResult = (await fetchRedis("get", `user:${token.id}`)) as
@@ -127,6 +130,7 @@ export const authOptions: NextAuthOptions = {
         session.user.image = token.picture;
         session.user.profession = token.profession;
         session.user.fields = token.fields;
+        session.user.country = token.country;
       }
 
       return Promise.resolve(session);

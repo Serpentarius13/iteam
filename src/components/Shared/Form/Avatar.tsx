@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import Image from "next/image";
 
@@ -11,6 +11,11 @@ export default function Avatar({ initialAvatar, handleChange }: IAvatarProps) {
   const [avatar, setAvatar] = useState<string>(
     initialAvatar ?? "/img/placeholder-avatar.png"
   );
+
+  useEffect(() => {
+    if (initialAvatar) setAvatar(initialAvatar);
+  }, [initialAvatar]);
+
 
   function handleInput(ev: FormEvent<HTMLInputElement>) {
     const { files } = ev.target as HTMLInputElement;

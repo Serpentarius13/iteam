@@ -8,6 +8,7 @@ import React, {
 import ClickAwayListener from "react-click-away-listener";
 import { Transition } from "react-transition-group";
 
+const letters = "abcdefghijklmnopqrstuvwxyz".split("");
 interface ISelectProps {
   currentOption: string | null | undefined;
   arrayOfOptions: string[];
@@ -37,6 +38,8 @@ export default function Select({
 }: ISelectProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
+  const [search, setSearch] = useState<string>("");
+
   const nodeRef = useRef(null);
 
   const selectRef = useRef<HTMLDivElement | null>(null);
@@ -53,41 +56,53 @@ export default function Select({
         ![...selectRef.current.children].includes(document.activeElement)
       )
         return;
+      switch (e.key) {
+        case e.key == "ArrowDown": {
+          const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
+
+          if (foundIx || foundIx == 0) {
+            const nextIndex = foundIx + 1;
+
+            if (nextIndex == arrayOfOptions.length) {
+              handleChange(arrayOfOptions[0]);
+            } else {
+              handleChange(arrayOfOptions[nextIndex]);
+            }
+          }
+        }
+
+        case e.key == "ArrowUp": {
+          const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
+
+          if (foundIx || foundIx == 0) {
+            const prevIndex = foundIx - 1;
+
+            if (prevIndex < 0) {
+              handleChange(arrayOfOptions[arrayOfOptions.length - 1]);
+            } else {
+              handleChange(arrayOfOptions[prevIndex]);
+            }
+          }
+        }
+
+        case e.key == "Enter": {
+          setIsOpened(false);
+        }
+      }
+
+      if (letters.includes(e.key)) {
+        setSearch((search) => (search += e.key));
+
+        const findFirst = arrayOfOptions.find((country) =>
+          country.toLowerCase().includes(search.toLowerCase())
+        );
+
+        if (findFirst) handleChange(findFirst);
+      } else setSearch("");
+
       e.preventDefault();
-
-      if (e.key == "ArrowDown") {
-        const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
-
-        if (foundIx || foundIx == 0) {
-          const nextIndex = foundIx + 1;
-
-          if (nextIndex == arrayOfOptions.length) {
-            handleChange(arrayOfOptions[0]);
-          } else {
-            handleChange(arrayOfOptions[nextIndex]);
-          }
-        }
-      }
-
-      if (e.key == "ArrowUp") {
-        const foundIx = arrayOfOptions.findIndex((el) => el == currentOption);
-
-        if (foundIx || foundIx == 0) {
-          const prevIndex = foundIx - 1;
-
-          if (prevIndex < 0) {
-            handleChange(arrayOfOptions[arrayOfOptions.length - 1]);
-          } else {
-            handleChange(arrayOfOptions[prevIndex]);
-          }
-        }
-      }
-
-      if (e.key == "Enter") {
-        setIsOpened(false);
-      }
     },
-    [arrayOfOptions, currentOption, handleChange]
+    [arrayOfOptions, currentOption, handleChange, search]
   );
 
   useEffect(() => {
@@ -100,7 +115,7 @@ export default function Select({
   return (
     <ClickAwayListener onClickAway={() => setIsOpened(false)}>
       <div
-        className="w-full flex flex-col rounded-small bg-white relative  select-none "
+        className="w-full flex flex-col rounded-small bg-white relative  select-none"
         aria-haspopup="listbox"
         aria-expanded={isOpened}
         aria-labelledby="select-label"
@@ -137,7 +152,7 @@ export default function Select({
         <Transition nodeRef={nodeRef} in={isOpened} timeout={duration}>
           {(state) => (
             <ul
-              className="flex flex-col absolute top-0 translate-y-[5rem] w-full items-stretch  border-2 border-solid border-light-blue"
+              className="flex flex-col absolute top-0 translate-y-[5rem] w-full items-stretch  border-2 border-solid border-light-blue   max-h-[20rem] overflow-y-scroll  z-[2] "
               ref={nodeRef}
               style={{
                 ...defaultStyle,

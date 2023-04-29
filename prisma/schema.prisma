@@ -45,6 +45,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   fields FieldRelation[]
+  country String? 
   profession String?
   password String?
   role String @default("member")

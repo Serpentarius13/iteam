@@ -24,8 +24,7 @@ export default function FinishRegistration() {
     }
 
     if (data?.user.profession) {
-      toaster.error("You have already finished registration");
-      sleep(300).then((e) => router.push("/"));
+      router.push("/profile");
     }
   });
 

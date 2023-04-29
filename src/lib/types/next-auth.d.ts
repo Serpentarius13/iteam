@@ -5,6 +5,7 @@ interface AuxilaryFields {
   profession: string;
   fields?: TTag[];
   verified: boolean
+  country: string;
 }
 declare module "next-auth/jwt" {
   interface JWT extends AuxilaryFields {
