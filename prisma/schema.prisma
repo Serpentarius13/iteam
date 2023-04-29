@@ -45,6 +45,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   fields FieldRelation[]
+  friends Friends[]
+
   country String? 
   profession String?
   password String?
@@ -71,4 +73,12 @@ model Fields {
   id Int @id @default(autoincrement())
   fieldName String
   fields FieldRelation[]
+}
+
+model Friends {
+  id Int @id @default(autoincrement())
+  userId String 
+  friendId String
+
+  friend User @relation(fields: [friendId], references: [id], onDelete: Cascade)
 }

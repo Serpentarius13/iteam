@@ -2,6 +2,61 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
 import prisma from "@/lib/prisma-db";
+import { FriendRequest, TTag } from "@/lib/types/utility";
+import { NextResponse } from "next/server";
+import { User } from "@prisma/client";
+import { db } from "@/lib/db";
+
+export async function POST(request: Request) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) return new Response("Unauthorized", { status: 401 });
+    const { fields, profession }: { fields: TTag[]; profession: string } =
+      await request.json();
+
+    let users: User[] = [];
+
+    if (fields.length) {
+      const fieldIds = fields.map((el) => el.id);
+      const relatedFields = await prisma.fieldRelation.findMany({
+        where: { fieldId: { in: fieldIds } },
+        select: { userId: true },
+      });
+      const uniqueUserIds = new Set(
+        relatedFields
+          .map((el) => el.userId)
+          .filter((el) => el != session.user.id)
+      );
+
+      users = await prisma.user.findMany({
+        where: { profession, id: { in: [...uniqueUserIds] } },
+      });
+    } else {
+      users = (await prisma.user.findMany({ where: { profession } })).filter(
+        (el) => el.id !== session.user.id
+      );
+    }
+
+    users = await Promise.all(
+      users.map(async (user) => {
+        const relationExists = !!(
+          await db.smembers(`friends:${session.user.id}`)
+        ).find((el) => {
+          const request: FriendRequest = JSON.parse(el);
+          return request.friendId == user.id;
+        });
+
+        if (relationExists) return { ...user, sentRequest: true };
+        else return { ...user, sentRequest: false };
+      })
+    );
+
+    return NextResponse.json(users);
+  } catch (error) {
+    console.log(error);
+    return new Response("Error getting users", { status: 400 });
+  }
+}
 
 export async function PATCH(request: Request) {
   try {

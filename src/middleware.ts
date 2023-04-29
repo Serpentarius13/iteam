@@ -7,7 +7,10 @@ import { getSession } from "next-auth/react";
 export async function middleware(request: NextRequest | any) {
   const session = await getToken({ req: request });
 
-  if (!session && request.url.includes("/profile")) {
+  if (
+    !session &&
+    (request.url.includes("/profile") || request.url.includes("/board"))
+  ) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
   if (
@@ -19,5 +22,5 @@ export async function middleware(request: NextRequest | any) {
 }
 
 export const config = {
-  matcher: ["/login", "/register", "/profile"],
+  matcher: ["/login", "/register", "/profile", "/board"],
 };
