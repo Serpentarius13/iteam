@@ -6,6 +6,10 @@ const { Fields, PrismaClient } = require("@prisma/client");
 
   await Promise.all(
     fields.map(async (field) => {
+      const isExists = Boolean(
+        await prisma.fields.findFirst({ where: { fieldName: field } })
+      );
+      if (isExists) return;
       const newField: typeof Fields | any = { fieldName: field };
       await prisma.fields.create({ data: newField });
     })

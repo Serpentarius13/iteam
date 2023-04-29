@@ -10,4 +10,8 @@
   .input-field {
     @apply py-[1.2rem] pl-[3rem] text-[1.7rem] -tracking-[0.5px];
   }
+
+  .form-title {
+    @apply text-[3.6rem] font-bold text-white text-center;
+  }
 }

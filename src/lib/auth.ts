@@ -8,6 +8,7 @@ import { fetchRedis } from "./fetchRedis";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import client from "./prisma-db";
 import { PrismaClient } from "@prisma/client";
+import { TTag } from "./types/utility";
 
 function getCredentials(prefix: string) {
   const clientId = process.env[`${prefix.toUpperCase()}_CLIENT_ID`];
@@ -78,7 +79,7 @@ export const authOptions: NextAuthOptions = {
       const fields = await prisma?.fieldRelation.findMany({
         where: { userId: dbUser.id },
         include: { field: true },
-      });
+      })
 
       return {
         id: dbUser.id,
@@ -87,6 +88,7 @@ export const authOptions: NextAuthOptions = {
         picture: dbUser.image,
         profession: dbUser.profession,
         fields,
+        verified: dbUser.verified
       };
 
       // const dbUserResult = (await fetchRedis("get", `user:${token.id}`)) as
@@ -124,6 +126,7 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(session);
     },
     redirect({ url, baseUrl }) {
+      console.log(url, baseUrl)
       if (!url.includes("/login")) return "/finish";
       else return "/profile";
     },

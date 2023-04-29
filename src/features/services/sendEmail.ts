@@ -34,7 +34,7 @@ export function makeVerificationTemplate(userId: string) {
 </div>`.replace("%LINK%", link);
 }
 
-export function sendEmail(template: string, email: string) {
+export async function sendEmail(template: string, email: string) {
   const nodemailer = require("nodemailer");
 
   const transport = nodemailer.createTransport({
@@ -47,17 +47,22 @@ export function sendEmail(template: string, email: string) {
     },
   });
 
-  console.log(email);
-
   const MailOptions = {
-    from: "dreamworkshop1313@gmail.com",
+    from: "iteamnoreply8@gmail.com",
     to: email,
     subject: "Iteam email confirmation letter",
     html: template,
   };
 
-  return transport.sendMail(MailOptions, (err: any, info: any) => {
-    if (err) throw new Error(err);
-    if (info) return info.response;
+
+  return await transport.sendMail(MailOptions, (err: any, info: any) => {
+    if (err) {
+      console.log(err);
+      throw new Error(err);
+    }
+    if (info) {
+      console.log(info.response);
+      return info.response;
+    }
   });
 }

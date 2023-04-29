@@ -9,10 +9,14 @@ export async function GET(request: Request) {
   try {
     const session = await getServerSession(authOptions);
 
-    sendEmail(
+    if (!session) return new Response("Unauthorized", { status: 401 });
+
+    await sendEmail(
       makeVerificationTemplate(session!.user.id),
-      session!.user.email as string
+      session.user.email as string
     );
+
+   
 
     return new Response("Ok");
   } catch (error: any) {

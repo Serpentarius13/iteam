@@ -1,8 +1,10 @@
 import { User } from "next-auth";
+import { TTag } from "./utility";
 
 interface AuxilaryFields {
   profession: string;
-  fields?: string[];
+  fields?: TTag[];
+  verified: boolean
 }
 declare module "next-auth/jwt" {
   interface JWT extends AuxilaryFields {

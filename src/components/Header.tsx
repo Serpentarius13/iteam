@@ -109,7 +109,7 @@ export default function Header() {
 
         <h2>Everything you were looking for is here</h2>
 
-        <Button className="w-fit" variant="default">
+        <Button className="w-fit z-[5]" variant="default">
           Join
         </Button>
       </div>
