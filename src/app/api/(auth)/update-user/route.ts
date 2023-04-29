@@ -7,6 +7,8 @@ import { authOptions } from "@/lib/auth";
 import { Fields } from "@prisma/client";
 import { redirect } from "next/navigation";
 
+import prisma from "@/lib/prisma-db";
+
 export async function POST(request: Request | any) {
   const session = await getServerSession(authOptions);
   if (!session?.user) return new Response("Unauthorized", { status: 401 });
@@ -23,8 +25,8 @@ export async function POST(request: Request | any) {
 
   try {
     delete session.user.fields;
-    await prisma.$transaction([
-      prisma.fieldRelation.createMany({
+    await prisma?.$transaction([
+      prisma?.fieldRelation.createMany({
         data: fields.map((field) => ({
           userId: session.user.id,
           fieldId: field.id,
