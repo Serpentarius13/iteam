@@ -1,5 +1,3 @@
-import { User } from "@prisma/client";
-import { signIn } from "next-auth/react";
 import prisma from "@/lib/prisma-db";
 
 interface IBody {
@@ -18,7 +16,7 @@ export async function POST(request: Request) {
     if (!name || !email || !password || !image)
       return new Response("Not enough data", { status: 422 });
 
-    const newUser: Partial<User> | any = {
+    const newUser = {
       name,
       email,
       password,
