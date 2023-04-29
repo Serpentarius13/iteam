@@ -9,12 +9,18 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 
 function getCredentials(prefix: string) {
-  const clientId = process.env[`${prefix.toUpperCase()}_CLIENT_ID`];
+  const clientId =
+    process.env.NODE_ENV == "development"
+      ? process.env[`DEV_${prefix.toUpperCase()}_CLIENT_ID`]
+      : process.env[`${prefix.toUpperCase()}_CLIENT_ID`];
 
   if (!clientId || clientId.length === 0)
     throw new Error(`No ${prefix} client id`);
 
-  const clientSecret = process.env[`${prefix.toUpperCase()}_SECRET`];
+  const clientSecret =
+    process.env.NODE_ENV == "development"
+      ? process.env[`DEV_${prefix.toUpperCase()}_SECRET`]
+      : process.env[`${prefix.toUpperCase()}_SECRET`];
 
   if (!clientSecret || clientSecret.length === 0)
     throw new Error(`No ${prefix} client secret`);
@@ -126,7 +132,6 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(session);
     },
     redirect({ url, baseUrl }) {
-      console.log(url, baseUrl);
       if (!url.includes("/login")) return "/finish";
       else return "/profile";
     },
