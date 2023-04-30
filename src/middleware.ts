@@ -4,7 +4,7 @@ import { authOptions } from "./lib/auth";
 import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 
-export async function middleware(request: NextRequest | any) {
+export async function middleware(request: Request | any) {
   const session = await getToken({ req: request });
 
   if (
