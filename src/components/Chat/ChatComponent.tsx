@@ -20,12 +20,12 @@ import { toaster } from "@/features/services/toaster";
 import LoadingButton from "../Shared/Buttons/LoadingButton";
 
 export default function Chat({
-  messages: fetchedMessages,
+  messages: fetchedMessages = [],
   roomId,
   session,
 }: {
-  messages: Message[];
-  roomId: string;
+  messages?: Message[];
+  roomId?: string;
   session: Session;
 }) {
   const [messages, setMessages] = useState<Message[]>(fetchedMessages);
