@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import Loader from "../Load/Loader";
 import Button from "./Button";
 
@@ -10,7 +11,7 @@ interface ILoadingButtonProps {
 export default function LoadingButton({
   isLoading,
   text,
-  onClick
+  onClick,
 }: ILoadingButtonProps) {
   return (
     <Button
@@ -20,12 +21,14 @@ export default function LoadingButton({
       onClick={onClick}
     >
       {isLoading && (
-        <div className="w-[3rem] h-[3rem] flex items-center">
+        <div className="w-[2rem] h-[2rem]">
           {" "}
-          <Loader />{" "}
+          <div className=" animate-spin">
+            <Loader2 />
+          </div>
         </div>
       )}
-      {text}
+      <span>{text} </span>
     </Button>
   );
 }

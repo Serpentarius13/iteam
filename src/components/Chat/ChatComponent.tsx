@@ -15,6 +15,9 @@ import { Session } from "next-auth/core/types";
 
 import { useParams } from "next/navigation";
 import { User } from "@prisma/client";
+import { useMutation } from "@tanstack/react-query";
+import { toaster } from "@/features/services/toaster";
+import LoadingButton from "../Shared/Buttons/LoadingButton";
 
 export default function Chat({
   messages: fetchedMessages,
@@ -28,14 +31,20 @@ export default function Chat({
   const [messages, setMessages] = useState<Message[]>(fetchedMessages);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  async function sendMessage() {
-    if (!inputRef?.current?.value) return;
-    const { data: message } = await axios.patch("/api/chat", {
-      text: inputRef.current.value,
-      roomId: roomId,
-    });
-    setMessages([message, ...messages]);
-  }
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async () => {
+      if (!inputRef?.current?.value) return;
+      const { data: message } = await axios.patch("/api/chat", {
+        text: inputRef.current.value,
+        roomId: roomId,
+      });
+      setMessages([message, ...messages]);
+    },
+    mutationKey: ["message"],
+    onError() {
+      toaster.error("There was an error sending your message");
+    },
+  });
 
   return (
     <div className="p-[2rem] w-full h-[60rem] bg-white borderline rounded-small flex-col flex gap-[1.4rem] justify-between ">
@@ -96,10 +105,11 @@ export default function Chat({
           ref={inputRef}
         />
 
-        <Button variant="default" onClick={sendMessage} disabled={!inputRef?.current?.value}>
-          {" "}
-          Send{" "}
-        </Button>
+        <LoadingButton
+          onClick={() => mutate()}
+          isLoading={isLoading}
+          text="Send"
+        />
       </div>
     </div>
   );
