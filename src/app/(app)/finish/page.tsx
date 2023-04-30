@@ -13,16 +13,17 @@ import { useEffect } from "react";
 import { ErrorIcon } from "react-hot-toast";
 
 export default function FinishRegistration() {
-  const { data, status } = useSession();
+  const { data, status } = useSession({
+    onUnauthenticated() {
+      toaster.error("Unauthorized");
+      sleep(1000).then((e) => router.push("/"));
+    },
+    required: true,
+  });
 
   const router = useRouter();
 
   useEffect(() => {
-    if (status == "unauthenticated") {
-      toaster.error("Unauthorized");
-      sleep(1000).then((e) => router.push("/"));
-    }
-
     if (data?.user.profession) {
       router.push("/profile");
     }
@@ -30,9 +31,7 @@ export default function FinishRegistration() {
 
   return (
     <main className="w-screen h-screen overflow-x-hidden flex items-center justify-center ">
-      {status == "loading" ||
-      status == "unauthenticated" ||
-      data?.user.profession ? (
+      {status == "loading" || data?.user.profession ? (
         <LoadingScreen isLoading={true} />
       ) : (
         <section className="flex flex-col items-center gap-[2rem]">

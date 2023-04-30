@@ -5,19 +5,21 @@ import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 
 export async function middleware(request: Request | any) {
-  const session = await getToken({ req: request });
+  const session = await getToken({ req: request, raw: true });
 
-  if (
-    !session &&
-    (request.url.includes("/profile") || request.url.includes("/board"))
-  ) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
   if (
     (request.url.includes("/login") || request.url.includes("/register")) &&
     session
   ) {
     return NextResponse.redirect(new URL("/profile", request.url));
+  }
+
+  
+  if (
+    !session &&
+    (request.url.includes("/profile") || request.url.includes("/board"))
+  ) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 }
 

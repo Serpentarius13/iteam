@@ -113,7 +113,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    if (status === "unauthenticated") router.push("/login");
     if (data && data?.user && !name && !email) {
       setName(data.user.name as string);
       setEmail(data.user.email as string);
