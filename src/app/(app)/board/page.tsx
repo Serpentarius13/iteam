@@ -46,6 +46,9 @@ export default function Board() {
       return data;
     },
     queryKey: ["fields"],
+    onError() {
+      toaster.error("Error loading fields");
+    },
   });
 
   type TUser = User & { sentRequest: boolean };
@@ -56,6 +59,9 @@ export default function Board() {
   } = useQuery<TUser[]>({
     queryKey: ["users"],
     queryFn,
+    onError() {
+      toaster.error("Error getting users");
+    },
   });
 
   return (
@@ -93,8 +99,8 @@ export default function Board() {
           <LoadingScreen isLoading={isLoading} />
         </div>
 
-        <div className="text-white text-[2rem] min-h-[30rem]  w-full relative break-words pt-[3rem]">
-          {users?.length ? (
+        <div className="text-white text-[2rem] min-h-[30rem]  w-full relative break-words pt-[3rem] flex gap-[2rem] flex-wrap">
+          {users?.length  ? (
             users.map((user) => (
               <figure
                 className="p-[1rem] bg-darkest-blue border-2 border-light-blue border-solid rounded-small flex flex-col w-[30rem] items-center gap-[0.4rem]"
@@ -102,7 +108,7 @@ export default function Board() {
               >
                 <Image
                   src={user.image as string}
-                  alt="Nono's avatar"
+                  alt={`${user.name}'s avatar`}
                   width={150}
                   height={150}
                   className="rounded-full w-[15rem] aspect-square object-cover"
@@ -124,7 +130,7 @@ export default function Board() {
                   }}
                 >
                   {" "}
-                  {user.sentRequest ? "Request sent" : "Send request"}{" "}
+                  {user.sentRequest ? "Request sent or friends" : "Send request"}{" "}
                 </Button>
               </figure>
             ))
@@ -134,6 +140,11 @@ export default function Board() {
               Nothing there...
             </h2>
           )}
+
+<div className='pt-[3rem]'>
+<LoadingScreen isLoading={loadingUsers}/>
+</div>
+         
         </div>
       </div>
     </main>

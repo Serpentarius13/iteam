@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import TextInput from "@/components/Shared/Form/TextInput";
 import { toaster } from "@/features/services/toaster";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import professions from "@/features/constants/professions";
 import Select from "@/components/Shared/Form/Select";
@@ -22,6 +22,13 @@ import countries from "@/features/constants/countries";
 
 import { Upload } from "upload-js";
 import LoadingButton from "@/components/Shared/Buttons/LoadingButton";
+
+type TLink = { text: string; slug: string };
+
+const routerLinks: TLink[] = [
+  { text: "Friends", slug: "friends" },
+  { text: "Chat", slug: "chat" },
+];
 
 const schema = z.object({
   name: z
@@ -66,6 +73,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   }
 
   const router = useRouter();
+
+  const pathname = usePathname();
   const { mutate, isLoading } = useMutation({
     mutationFn: async (data: TFormValues) => {
       await axios.patch("/api/user/", { ...data, profession, country });
@@ -123,7 +132,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   };
 
   return (
-    <main className="w-screen h-screen flex items-center justify-between center lg:flex-col  pt-[20rem] relative ">
+    <main className="w-screen h-screen flex items-center justify-between center lg:flex-col gap-[10rem] lg:gap-[4rem]  pt-[20rem] relative ">
       <div className="w-[25rem] h-full flex flex-col gap-[2rem]">
         <Avatar initialAvatar={data?.user.image} handleChange={handleAvatar} />
         {isEditing ? (
@@ -250,6 +259,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </button>{" "}
           </div>
         )}
+      </div>
+      <div className="w-full h-full border-2 border-solid border-light-blue flex flex-col gap-[4.4rem] items-center py-[2.4rem] px-[11rem]">
+        <ul className="flex items-center gap-[3rem] text-white text-[1.7rem]">
+          {routerLinks.map((link) => (
+            <li key={link.slug}>
+              <Link
+                href={`/profile/${link.slug}`}
+                className={`${
+                  pathname?.includes(link.slug)
+                    ? "bg-light-blue text-black"
+                    : "bg-transparent text-white hover:bg-lightest-blue hover:text-black"
+                } transition-all p-[1rem] rounded-small`}
+              >
+                {link.text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {children}
       </div>
 
       <LoadingScreen isLoading={status === "loading" || isLoading} />

@@ -32,21 +32,17 @@ export async function POST(request: Request) {
         where: { profession, id: { in: [...uniqueUserIds] } },
       });
     } else {
-      users = (await prisma.user.findMany({ where: { profession } })).filter(
-        (el) => el.id !== session.user.id
-      );
+      users = await prisma.user.findMany({ where: { profession } });
     }
 
+    users = users.filter((el) => el.id !== session.user.id);
     users = await Promise.all(
       users.map(async (user) => {
-        const relationExists = !!(
-          await db.smembers(`friends:${session.user.id}`)
-        ).find((el) => {
-          const request: FriendRequest = JSON.parse(el);
-          return request.friendId == user.id;
-        });
+        const friendshipBetween = !!(await prisma.friends.findFirst({
+          where: { friendId: session.user.id, userId: user.id },
+        }));
 
-        if (relationExists) return { ...user, sentRequest: true };
+        if (friendshipBetween) return { ...user, sentRequest: true };
         else return { ...user, sentRequest: false };
       })
     );

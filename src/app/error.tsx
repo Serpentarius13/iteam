@@ -15,7 +15,7 @@ export default function Error({
       <ErrorIcon />
 
       <p className="text-[2rem] font-bold text-red-500">
-        Sorry, there was an error <br />  {error.message}
+        Sorry, there was an error <br /> {error.message} <br /> {error.stack}
       </p>
 
       <Button variant="default" onClick={() => reset()}>

@@ -1,4 +1,4 @@
-'use client';
+
 
 import Navbar from "@/components/Shared/Navbar";
 import "../assets/main.scss";

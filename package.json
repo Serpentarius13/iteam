@@ -39,6 +39,7 @@
     "three": "^0.151.3",
     "typescript": "5.0.4",
     "upload-js": "^2.13.0",
+    "uuid": "^9.0.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {

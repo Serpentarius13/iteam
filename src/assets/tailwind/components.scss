@@ -14,4 +14,8 @@
   .form-title {
     @apply text-[3.6rem] font-bold text-white text-center;
   }
+
+  .borderline {
+    @apply border-2 border-solid border-light-blue;
+  }
 }

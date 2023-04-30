@@ -81,4 +81,11 @@ model Friends {
   friendId String
 
   friend User @relation(fields: [friendId], references: [id], onDelete: Cascade)
+   @@unique([userId, friendId])
+}
+
+model Chats {
+  id Int @id @default(autoincrement())
+  userOne String 
+  userTwo String 
 }
