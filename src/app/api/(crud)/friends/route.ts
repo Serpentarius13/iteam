@@ -28,7 +28,7 @@ export async function GET() {
     const friendsWithChats = await Promise.all(
       friends.map(async (friend) => {
         const { id } = friend.friend;
-        const chat = await prisma?.chats.findFirst({
+        let chat = await prisma?.chats.findFirst({
           where: {
             OR: [
               { userOne: session.user.id, userTwo: id },
@@ -37,11 +37,15 @@ export async function GET() {
           },
         });
 
-        return { friend: { ...friend.friend, chat: chat?.id } };
+        if (!chat) {
+          chat = await prisma.chats.create({
+            data: { userOne: session.user.id, userTwo: id },
+          });
+        }
+
+        return { ...friend.friend, chat: chat?.id };
       })
     );
-
-
 
     // });
     return NextResponse.json(friendsWithChats);

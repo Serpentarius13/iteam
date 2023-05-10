@@ -26,9 +26,11 @@ export default function BoardUser({
       refetch();
     },
     onError() {
-      toaster.error('Error sending request. Perhaps you are already friends');
+      toaster.error("Error sending request. Perhaps you are already friends");
     },
   });
+
+  console.log(sentRequest);
 
   return (
     <figure

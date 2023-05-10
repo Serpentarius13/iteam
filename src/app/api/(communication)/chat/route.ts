@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     });
 
     // Возвращаю созданный чат для редиректа
-    //TODO Сделать редирект?
+  
     return NextResponse.json(chat);
   } catch (error) {
     return new Response("Error creating chat", { status: 400 });

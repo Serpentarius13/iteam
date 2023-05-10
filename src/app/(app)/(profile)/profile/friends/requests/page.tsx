@@ -30,6 +30,8 @@ export default function FriendRequests() {
       refetch();
     },
   });
+
+  console.log(data)
   return (
     <section className="w-full h-full pl-[5rem] flex flex-wrap items-start text-white relative">
       {data?.map((request) => (

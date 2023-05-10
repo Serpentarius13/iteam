@@ -18,7 +18,8 @@ import { signIn } from "next-auth/react";
 import { toaster } from "@/features/services/toaster";
 import { useRouter } from "next/navigation";
 import sleep from "@/features/services/sleep";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/dist/client/components/navigation";
 
 const schema = z.object({
   email: z
@@ -48,18 +49,15 @@ export default function SignInForm() {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async (data: TFormValues) => {
-    try {
-      setLoading(true);
-      const { email, password } = data;
-      await signIn("credentials", { email, password });
-    } catch (error) {
-      toaster.error("Error signing you in");
-
-      await sleep(1000);
-      router.refresh();
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const { email, password } = data;
+    signIn("credentials", { email, password, redirect: false }).then(
+      ({ ok, error }: any) => {
+        if (error) toaster.error(error);
+        else toaster.success("Successfully logged in!");
+        setLoading(false);
+      }
+    );
   };
 
   return (

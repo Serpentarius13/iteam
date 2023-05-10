@@ -13,12 +13,12 @@ export default function FriendsSidebar({
   children,
   leadingToFriends = false,
 }: IFriendsSidebarProps) {
-  console.log(friends)
+  console.log(friends);
   return (
     <aside className="overflow-y-auto  h-[85%] overflow-x-hidden min-w-[25rem]  pr-[2rem] border-r-2 border-solid border-light-blue flex flex-col justify-between items-center relative">
       <ul className="flex-col flex gap-[1rem] max-h-[80%] overflow-y-auto">
         {friends?.length &&
-          friends.map(({friend}) => (
+          friends.map((friend) => (
             <li key={friend.id}>
               <Link
                 href={

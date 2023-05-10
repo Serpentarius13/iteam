@@ -14,17 +14,13 @@ export async function GET(
   { params }: { params: { chatId: string } }
 ) {
   try {
-
-
     const exists = await prisma?.chats.findUnique({
       where: { id: +params.chatId },
     });
 
     if (!exists) return NextResponse.json({ exists: false });
 
-
     const messages: Message[] = await db.lrange(`chat:${params.chatId}`, 0, -1);
-
 
     const chatRoom: ChatRoom = { messages, exists: true };
     return NextResponse.json(chatRoom);

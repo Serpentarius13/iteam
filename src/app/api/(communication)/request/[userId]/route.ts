@@ -17,9 +17,9 @@ export async function GET(
     if (!params?.userId?.length)
       return new Response("No couser was provided", { status: 422 });
 
-    const requests: FriendRequest[] = await db.smembers(
-      `requests:${params.userId}`
-    );
+    const requests = await prisma.friendRequest.findMany({
+      where: { owner: params.userId },
+    });
 
     if (!!requests.find((request) => request.friendId == session.user.id)) {
       return new Response("", {
@@ -28,17 +28,13 @@ export async function GET(
       });
     }
 
-    const couser = await prisma?.user.findUnique({
-      where: { id: params.userId },
-    });
-
-    if (!couser) return new Response("No such user exists", { status: 409 });
-
-    await db.sadd(`requests:${params.userId}`, {
-      name: couser.name,
-      image: couser.image,
-
-      friendId: session.user.id,
+    await prisma.friendRequest.create({
+      data: {
+        owner: params.userId,
+        friendId: session.user.id,
+        image: session.user.image as string,
+        name: session.user.name as string,
+      },
     });
 
     return new Response("Ok");

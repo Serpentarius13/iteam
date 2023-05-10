@@ -38,9 +38,9 @@ export async function POST(request: Request) {
     users = users.filter((el) => el.id !== session.user.id);
     users = await Promise.all(
       users.map(async (user) => {
-        const requests: FriendRequest[] = await db.smembers(
-          `requests:${user.id}`
-        );
+        const requests = await prisma?.friendRequest.findMany({
+          where: { owner: user.id },
+        });
         if (requests.find((request) => request.friendId == session.user.id)) {
           return { ...user, sentRequest: true };
         } else return { ...user, sentRequest: false };

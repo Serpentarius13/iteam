@@ -46,6 +46,7 @@ model User {
   sessions      Session[]
   fields FieldRelation[]
   friends Friends[]
+  friendRequests FriendRequest[]
 
   country String? 
   profession String?
@@ -82,6 +83,20 @@ model Friends {
 
   friend User @relation(fields: [friendId], references: [id], onDelete: Cascade)
    @@unique([userId, friendId])
+}
+
+model FriendRequest {
+  id Int @id @default(autoincrement())
+
+  owner String 
+  friendId String
+
+  name String
+  image String
+
+  friend User @relation(fields: [friendId], references: [id], onDelete: Cascade)
+
+  @@unique([friendId, owner])
 }
 
 model Chats {

@@ -25,8 +25,9 @@ export interface ChatRoom {
   exists: boolean;
 }
 
-export type SidebarFriend = {
-  friend: Pick<User, "image" | "email" | "id" | "name" | "profession"> & {
-    chat: string | null;
-  };
+export type SidebarFriend = Pick<
+  User,
+  "image" | "email" | "id" | "name" | "profession"
+> & {
+  chat: string | null;
 };
