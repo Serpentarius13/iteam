@@ -8,47 +8,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { ReactNode } from "react";
 import { User } from "@prisma/client";
+import { SidebarFriend } from "@/lib/types/utility";
+import FriendsSidebar from "@/components/ProfileFriendsSidebar/FriendsSidebar";
+
+
+export const revalidate = 0
 
 export default function FriendsLayout({ children }: { children: ReactNode }) {
-  const { data: friends, isLoading } = useQuery<
-    {
-      friend: Pick<User, "image" | "email" | "id" | "name" | "profession">;
-    }[]
-  >({
+  const { data: friends, isLoading } = useQuery<SidebarFriend[]>({
     queryFn: async () => {
       const { data } = await axios.get("/api/friends");
       return data;
     },
   });
 
+  console.log(friends);
+
   return (
     <section className="flex justify-between items-start w-full h-full">
-      <aside className="h-[90%] min-w-[25rem]  pr-[5rem] border-r-2 border-solid border-light-blue flex flex-col justify-between items-center">
-        <ul className="flex-col flex gap-[1rem]">
-          {friends?.length &&
-            friends.map(({ friend }) => (
-              <li
-                className="flex gap-[2rem] items-center cursor-pointer"
-                key={friend.id}
-              >
-                <Link href="/">
-                  <Image
-                    src={friend.image as string}
-                    alt={`${friend.name}'s avatar`}
-                    width={50}
-                    height={50}
-                    className="w-[5rem] aspect-square rounded-full"
-                  />
-                </Link>
-
-                <div className="flex flex-col text-white">
-                  <h4 className="text-[1.7rem]">{friend.name}</h4>
-
-                  <span className="text-[1.5rem]">{friend.profession}</span>
-                </div>
-              </li>
-            ))}
-        </ul>
+      <FriendsSidebar friends={friends ?? []} leadingToFriends>
         <Link
           href="/profile/friends/requests"
           className={`${buttonVariants({ variant: "default" })} `}
@@ -57,7 +35,7 @@ export default function FriendsLayout({ children }: { children: ReactNode }) {
         </Link>
 
         <LoadingScreen isLoading={isLoading} />
-      </aside>
+      </FriendsSidebar>
 
       {children}
     </section>

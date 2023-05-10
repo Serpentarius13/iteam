@@ -23,10 +23,8 @@ export async function GET(
     if (!exists) return NextResponse.json({ exists: false });
 
 
-    console.log(params.chatId, "chatid");
     const messages: Message[] = await db.lrange(`chat:${params.chatId}`, 0, -1);
 
-    console.log(messages);
 
     const chatRoom: ChatRoom = { messages, exists: true };
     return NextResponse.json(chatRoom);

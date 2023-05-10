@@ -91,7 +91,7 @@ const LogOnBtns = () => {
 
       <button
         onClick={() =>
-          signOut({ callbackUrl: window.location.pathname, redirect: false })
+          signOut({ callbackUrl: '/login', }).then(r => location.reload())
         }
       >
         <div className="flex items-center gap-[0.5rem] text-light-blue text-[1.6rem]">

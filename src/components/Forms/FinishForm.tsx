@@ -51,10 +51,10 @@ export default function FinishForm() {
     async onSuccess() {
       toaster.success("Successfully finished registration");
 
-      console.log("success");
+ 
       try {
         await fetch("/api/send-email");
-        console.log("sent");
+   
         toaster.success("Sent your email");
       } catch (error) {
         toaster.error("There was an error sending your email");

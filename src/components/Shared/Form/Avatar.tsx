@@ -9,7 +9,7 @@ interface IAvatarProps {
 
 export default function Avatar({ initialAvatar, handleChange }: IAvatarProps) {
   const [avatar, setAvatar] = useState<string>(
-    initialAvatar ?? "/img/placeholder-avatar.png"
+    initialAvatar ?? "/img/placeholder-avatar.jpg"
   );
 
   useEffect(() => {

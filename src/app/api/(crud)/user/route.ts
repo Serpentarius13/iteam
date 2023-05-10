@@ -38,12 +38,12 @@ export async function POST(request: Request) {
     users = users.filter((el) => el.id !== session.user.id);
     users = await Promise.all(
       users.map(async (user) => {
-        const friendshipBetween = !!(await prisma.friends.findFirst({
-          where: { friendId: session.user.id, userId: user.id },
-        }));
-
-        if (friendshipBetween) return { ...user, sentRequest: true };
-        else return { ...user, sentRequest: false };
+        const requests: FriendRequest[] = await db.smembers(
+          `requests:${user.id}`
+        );
+        if (requests.find((request) => request.friendId == session.user.id)) {
+          return { ...user, sentRequest: true };
+        } else return { ...user, sentRequest: false };
       })
     );
 

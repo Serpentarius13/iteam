@@ -1,10 +1,12 @@
-import ChatComponent from "@/components/Chat/ChatComponent";
 import { authOptions } from "@/lib/auth";
 import { FileWarning } from "lucide-react";
 
 import { getServerSession } from "next-auth";
+import dynamic from "next/dynamic";
 
-export const revalidate = 60
+const ChatComponent = dynamic(() => import("@/components/Chat/ChatComponent"));
+
+export const revalidate = 60;
 
 export default async function Chat({
   params,
@@ -21,7 +23,6 @@ export default async function Chat({
     }/api/chat/2101ae6e-6399-4712-800e-3a18295bbb9f+${session!.user.id}`
   ).then((res) => res.json());
 
-  console.log(messages);
   return (
     <div className="w-screen h-screen pt-[20rem] flex items-center justify-center">
       {session && messages ? (

@@ -8,13 +8,14 @@ import professions from "@/features/constants/professions";
 import useTags from "@/features/hooks/useTags";
 import { TTag } from "@/lib/types/utility";
 import { User } from "@prisma/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { toaster } from "@/features/services/toaster";
+import BoardUser from "@/components/Board/BoardUser";
 
 export default function Board() {
   const { tags: initialTags, handleAddTag, setTags } = useTags([]);
@@ -62,6 +63,7 @@ export default function Board() {
     onError() {
       toaster.error("Error getting users");
     },
+  
   });
 
   return (
@@ -96,43 +98,13 @@ export default function Board() {
             handleAddTag={handleAddTag}
           />
 
-          <LoadingScreen isLoading={isLoading} />
+          <LoadingScreen isLoading={isLoading || loadingUsers} />
         </div>
 
         <div className="text-white text-[2rem] min-h-[30rem]  w-full relative break-words pt-[3rem] flex gap-[2rem] flex-wrap">
-          {users?.length  ? (
+          {users?.length ? (
             users.map((user) => (
-              <figure
-                className="p-[1rem] bg-darkest-blue border-2 border-light-blue border-solid rounded-small flex flex-col w-[30rem] items-center gap-[0.4rem]"
-                key={user.id}
-              >
-                <Image
-                  src={user.image as string}
-                  alt={`${user.name}'s avatar`}
-                  width={150}
-                  height={150}
-                  className="rounded-full w-[15rem] aspect-square object-cover"
-                />
-
-                <span>{user.name}</span>
-                <span>{user.profession}</span>
-                <Button
-                  disabled={user.sentRequest}
-                  variant="default"
-                  onClick={async () => {
-                    try {
-                      await axios.get("/api/request/" + user.id);
-                      toaster.success("Request sucessfuly sent");
-                      refetch();
-                    } catch (e: any) {
-                      toaster.error(e?.message);
-                    }
-                  }}
-                >
-                  {" "}
-                  {user.sentRequest ? "Request sent or friends" : "Send request"}{" "}
-                </Button>
-              </figure>
+              <BoardUser {...user} key={user.id} refetch={refetch} />
             ))
           ) : (
             <h2 className="form-title text-start pt-[2rem]">
@@ -141,9 +113,6 @@ export default function Board() {
             </h2>
           )}
 
-<div className='pt-[3rem]'>
-<LoadingScreen isLoading={loadingUsers}/>
-</div>
          
         </div>
       </div>

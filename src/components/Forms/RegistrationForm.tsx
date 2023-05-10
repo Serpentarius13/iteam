@@ -73,7 +73,7 @@ export default function RegistrationForm() {
 
   const onSubmit = async (data: TFormValues) => {
     const { email, name, password } = data;
-    mutate({ email, name, password, image: "123" });
+    mutate({ email, name, password, image: "/img/placeholder-avatar.jpg" });
   };
 
   return (

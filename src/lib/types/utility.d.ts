@@ -23,5 +23,10 @@ export interface Message {
 export interface ChatRoom {
   messages: Message[];
   exists: boolean;
-
 }
+
+export type SidebarFriend = {
+  friend: Pick<User, "image" | "email" | "id" | "name" | "profession"> & {
+    chat: string | null;
+  };
+};

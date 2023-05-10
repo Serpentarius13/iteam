@@ -1,8 +1,9 @@
-import About from "@/components/About";
-import Actions from "@/components/Actions";
-import Header from "@/components/Header";
-import WIP from "@/components/WIP";
-import { Metadata } from "next";
+import dynamic from "next/dynamic";
+
+const Header = dynamic(() => import("@/components/Header"));
+const Actions = dynamic(() => import("@/components/Actions"));
+const About = dynamic(() => import("@/components/About"));
+const WIP = dynamic(() => import("@/components/WIP"));
 
 export default function Home() {
   return (

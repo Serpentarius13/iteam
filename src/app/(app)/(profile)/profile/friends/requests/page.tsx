@@ -16,7 +16,7 @@ export default function FriendRequests() {
     },
   });
 
-  function sendResponse(accept: boolean) {}
+
 
   const { mutate, isLoading: isHandleRequestLoading } = useMutation({
     mutationFn: async ({
@@ -33,7 +33,7 @@ export default function FriendRequests() {
   return (
     <section className="w-full h-full pl-[5rem] flex flex-wrap items-start text-white relative">
       {data?.map((request) => (
-        <figure className="flex items-center gap-[1rem]" key={request.id}>
+        <figure className="flex items-center gap-[1rem]" key={request.name}>
           <Image
             src={request.image}
             alt={`${request.name}'s avatar`}

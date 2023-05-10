@@ -17,6 +17,17 @@ export async function GET(
     if (!params?.userId?.length)
       return new Response("No couser was provided", { status: 422 });
 
+    const requests: FriendRequest[] = await db.smembers(
+      `requests:${params.userId}`
+    );
+
+    if (!!requests.find((request) => request.friendId == session.user.id)) {
+      return new Response("", {
+        status: 409,
+        statusText: "Request was already sent",
+      });
+    }
+
     const couser = await prisma?.user.findUnique({
       where: { id: params.userId },
     });
@@ -26,13 +37,13 @@ export async function GET(
     await db.sadd(`requests:${params.userId}`, {
       name: couser.name,
       image: couser.image,
-      isHandled: false,
+
       friendId: session.user.id,
     });
 
     return new Response("Ok");
   } catch (error) {
+    console.log(error);
     return new Response("Error sending friend request", { status: 400 });
   }
 }
-

@@ -11,14 +11,21 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     if (!session) return new Response("Unauthorized", { status: 401 });
 
+
+
     const requests: FriendRequest[] = await db.smembers(
       `requests:${session.user.id}`
     );
+
+    console.log(requests)
+
+    
 
     const notHandled = requests.filter((el) => !el.isHandled);
 
     return NextResponse.json(notHandled);
   } catch (error) {
+    console.log(error)
     return new Response("Error getting friend requests", { status: 400 });
   }
 }
@@ -39,7 +46,6 @@ export async function POST(request: Request) {
 
     if (!couser) return new Response("No such user exists", { status: 409 });
 
-    console.log("here");
 
     const requests: FriendRequest[] = await db.smembers(
       `requests:${session.user.id}`

@@ -6,16 +6,18 @@ interface ILoadingButtonProps {
   isLoading: boolean;
   text: string;
   onClick: () => any;
+  disabled?: boolean
 }
 
 export default function LoadingButton({
   isLoading,
   text,
   onClick,
+  disabled
 }: ILoadingButtonProps) {
   return (
     <Button
-      disabled={isLoading}
+      disabled={isLoading || disabled}
       variant="default"
       className="flex items-center  justify-center gap-[1rem]"
       onClick={onClick}
