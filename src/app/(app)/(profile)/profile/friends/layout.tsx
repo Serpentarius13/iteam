@@ -9,7 +9,7 @@ import Image from "next/image";
 import { ReactNode } from "react";
 import { User } from "@prisma/client";
 import { SidebarFriend } from "@/lib/types/utility";
-import FriendsSidebar from "@/components/ProfileFriendsSidebar/FriendsSidebar";
+import FriendsSidebar from "@/components/Profile/FriendsSidebar";
 
 
 export const revalidate = 0

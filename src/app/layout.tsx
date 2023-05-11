@@ -1,8 +1,15 @@
-import Navbar from "@/components/Shared/Navbar";
 import "../assets/main.scss";
 import { Monda } from "next/font/google";
-import Footer from "@/components/Shared/Footer";
+
 import Providers from "@/components/Providers";
+
+import dynamic from "next/dynamic";
+
+const Navbar = dynamic(() => import("@/components/Shared/Navbar"));
+const Footer = dynamic(() => import("@/components/Shared/Footer"));
+
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 
 const monda = Monda({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -15,16 +22,17 @@ export const metadata = {
     "ITeam is the first and best service for finding your dream team in informational technologies field! Get yourself some mates and make an innovative application together!",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={`${monda.className} bg-darkest-blue`}>
         <Providers>
-          <Navbar />
+          <Navbar session={session} />
           <main className="overflow-x-hidden  flex flex-col gap-[4rem]">
             {children}
           </main>

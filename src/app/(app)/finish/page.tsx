@@ -2,7 +2,8 @@ import dynamic from "next/dynamic";
 
 const FinishForm = dynamic(() => import("@/components/Forms/FinishForm"));
 
-export default function FinishRegistration() {
+
+export default async function FinishRegistration() {
   return (
     <main className="w-screen h-screen overflow-x-hidden flex items-center justify-center ">
       <section className="flex flex-col items-center gap-[2rem]">

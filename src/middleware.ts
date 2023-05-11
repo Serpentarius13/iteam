@@ -5,7 +5,11 @@ import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 
 export async function middleware(request: Request | any) {
-  const session = await getToken({ req: request, raw: true });
+  const session = await getToken({ req: request });
+
+  if (request.url.includes("/finish") && session?.profession) {
+    return NextResponse.redirect(new URL("/profile", request.url));
+  }
 
   if (
     (request.url.includes("/login") || request.url.includes("/register")) &&
@@ -14,7 +18,6 @@ export async function middleware(request: Request | any) {
     return NextResponse.redirect(new URL("/profile", request.url));
   }
 
-  
   if (
     !session &&
     (request.url.includes("/profile") || request.url.includes("/board"))
@@ -24,5 +27,5 @@ export async function middleware(request: Request | any) {
 }
 
 export const config = {
-  matcher: ["/login", "/register", "/profile/:path*", "/board"],
+  matcher: ["/login", "/register", "/profile/:path*", "/board", "/finish"],
 };

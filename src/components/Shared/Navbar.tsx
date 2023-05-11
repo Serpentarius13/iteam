@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Loader from "./Load/Loader";
 
+import { Session } from "next-auth/core/types";
+
 type TRouterLink = {
   href: string;
   text: string;
@@ -91,7 +93,7 @@ const LogOnBtns = () => {
 
       <button
         onClick={() =>
-          signOut({ callbackUrl: '/login', }).then(r => location.reload())
+          signOut({ callbackUrl: "/login" }).then((r) => location.reload())
         }
       >
         <div className="flex items-center gap-[0.5rem] text-light-blue text-[1.6rem]">
@@ -114,7 +116,19 @@ const LogOnBtns = () => {
   );
 };
 
-const MobileNavbar = ({ status }: { status: "authenticated" | "loading" | 'unauthenticated' }) => {
+const ButtonDecider = ({ session }: { session: Session | null }) => {
+  return (
+    <>
+      {!session && !Object.keys(session ?? {}).length ? (
+        <Loader />
+      ) : (
+        <>{session?.user ? <LogOnBtns /> : <NavbarBtns />}</>
+      )}
+    </>
+  );
+};
+
+const MobileNavbar = ({ session }: { session: Session | null }) => {
   const burgerInput = useRef<HTMLInputElement | null>(null);
 
   function handleCloseBurger() {
@@ -149,19 +163,14 @@ const MobileNavbar = ({ status }: { status: "authenticated" | "loading" | 'unaut
         <NavbarLinks />
 
         <li className="flex gap-[2rem] flex-col items-center">
-          {status == "loading" ? (
-            <Loader />
-          ) : (
-            <>{status === "authenticated" ? <LogOnBtns /> : <NavbarBtns />}</>
-          )}
+          <ButtonDecider session={session} />
         </li>
       </ul>
     </div>
   );
 };
 
-export default function Navbar() {
-  const { status, data } = useSession();
+export default function Navbar({ session }: { session: Session | null }) {
   const [isShowingBg, setShowingBg] = useState<boolean>(false);
   useEffect(() => {
     document.body.addEventListener("wheel", (e) => {
@@ -185,15 +194,11 @@ export default function Navbar() {
         </ul>
 
         <div className="flex gap-[1.9rem] items-center lg:hidden">
-          {status == "loading" ? (
-            <Loader />
-          ) : (
-            <>{status === "authenticated" ? <LogOnBtns /> : <NavbarBtns />}</>
-          )}
+          <ButtonDecider session={session} />
         </div>
 
         <div className=" hidden lg:block">
-          <MobileNavbar status={status} />
+          <MobileNavbar session={session} />
         </div>
       </div>
     </nav>

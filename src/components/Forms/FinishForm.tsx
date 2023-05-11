@@ -2,16 +2,16 @@
 
 import Select from "@/components/Shared/Form/Select";
 import { toaster } from "@/features/services/toaster";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 
 import LoadingScreen from "../Shared/Load/LoadingScreen";
 import Tags from "../Tags/Tags";
 import { useSession } from "next-auth/react";
-import { TTag } from "@/lib/types/utility";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Button, { buttonVariants } from "../Shared/Buttons/Button";
-import { User } from "next-auth";
+
 import EmailLinks from "./EmailLinks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -51,10 +51,9 @@ export default function FinishForm() {
     async onSuccess() {
       toaster.success("Successfully finished registration");
 
- 
       try {
         await fetch("/api/send-email");
-   
+
         toaster.success("Sent your email");
       } catch (error) {
         toaster.error("There was an error sending your email");

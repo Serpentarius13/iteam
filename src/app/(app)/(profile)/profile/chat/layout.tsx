@@ -10,7 +10,7 @@ import Link from "next/link";
 
 import ChatComponent from "@/components/Chat/ChatComponent";
 import { ReactNode } from "react";
-import FriendsSidebar from "@/components/ProfileFriendsSidebar/FriendsSidebar";
+import FriendsSidebar from "@/components/Profile/FriendsSidebar";
 import { SidebarFriend } from "@/lib/types/utility";
 
 export default function ChatLayout({ children }: { children: ReactNode }) {
