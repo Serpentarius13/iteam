@@ -1,13 +1,18 @@
 import { getServerSession, unstable_getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "./lib/auth";
-import { getToken } from "next-auth/jwt";
+import { decode, getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 
 export async function middleware(request: Request | any) {
-  const session = await getToken({ req: request });
+  const session = await getToken({ req: request, raw: true });
 
-  if (request.url.includes("/finish") && session?.profession) {
+  const decoded = await decode({
+    token: session,
+    secret: process.env.NEXTAUTH_SECRET as string,
+  });
+
+  if (request.url.includes("/finish") && !!decoded?.profession) {
     return NextResponse.redirect(new URL("/profile", request.url));
   }
 
