@@ -8,8 +8,7 @@ import dynamic from "next/dynamic";
 const Navbar = dynamic(() => import("@/components/Shared/Navbar"));
 const Footer = dynamic(() => import("@/components/Shared/Footer"));
 
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+
 
 const monda = Monda({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -27,13 +26,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={`${monda.className} bg-darkest-blue`}>
         <Providers>
-          <Navbar session={session} />
-          <main className="overflow-x-hidden  flex flex-col gap-[4rem]">
+          <Navbar  />
+          <main className="flex  flex-col gap-[4rem] overflow-x-hidden">
             {children}
           </main>
           <Footer />

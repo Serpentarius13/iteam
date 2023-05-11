@@ -12,26 +12,26 @@ interface IActionCard {
 
 const ActionCard: React.FC<IActionCard> = ({ icon, text, title, iconAlt }) => {
   return (
-    <figure className="flex flex-col gap-[2.4rem] items-center group w-[32rem] cursor-pointer pt-[2rem]  select-none">
+    <figure className="group flex w-[32rem] cursor-pointer select-none flex-col items-center gap-[2.4rem]  pt-[2rem]">
       <Image
         src={icon}
         alt={iconAlt}
-        width={50}
-        height={28}
-        className="w-[5rem] h-[2.8rem]"
+        className="h-[2.8rem] w-[5rem]"
+        width="0"
+        height="0"
       />
 
-      <h4 className="font-bold text-white text-[2.4rem]">{title}</h4>
+      <h4 className="text-[2.4rem] font-bold text-white">{title}</h4>
 
-      <div className=" transition-all opacity-0 group-hover:opacity-100 relative ">
+      <div className=" relative opacity-0 transition-all group-hover:opacity-100 ">
         <Image
           src="/icons/actions/triangle.svg"
           alt="Triangle"
           width={48}
           height={32}
-          className="absolute -top-[2rem] ] left-1/2 -translate-x-1/2"
+          className="] absolute -top-[2rem] left-1/2 -translate-x-1/2"
         />
-        <p className="shadow-light-blue p-[2.4rem] z-10 block relative bg-light-blue  rounded-small text-[1.4rem]">
+        <p className="relative z-10 block rounded-small bg-light-blue p-[2.4rem]  text-[1.4rem] shadow-light-blue">
           {text}
         </p>
       </div>
@@ -69,7 +69,7 @@ const actionCards: IActionCard[] = [
 export default function Actions() {
   return (
     <SectionSkeleton title="Actions">
-      <div className="flex justify-between flex-wrap md:items-center md:justify-center md:gap-[2rem] pb-[5rem] items-start">
+      <div className="flex flex-wrap items-start justify-between pb-[5rem] md:items-center md:justify-center md:gap-[2rem]">
         {actionCards.map((card) => (
           <ActionCard {...card} key={card.title} />
         ))}
@@ -78,7 +78,7 @@ export default function Actions() {
       <div className="absolute -left-1/3 -top-[75%] -z-[1] lg:bottom-0 lg:top-auto">
         <Aura />
       </div>
-      <div className="absolute top-1/2 left-0">
+      <div className="absolute left-0 top-1/2">
         <BigStar />
       </div>
     </SectionSkeleton>

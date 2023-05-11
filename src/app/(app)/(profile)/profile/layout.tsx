@@ -17,9 +17,9 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   return (
-    <main className="w-screen h-screen flex items-center justify-between center lg:flex-col gap-[10rem] lg:gap-[4rem]  pt-[20rem] relative ">
+    <main className="center relative flex h-screen w-screen items-center justify-between gap-[10rem] pt-[20rem]  md:flex-col lg:items-start  lg:gap-[4rem] ">
       <ProfileInfo session={session} />
-      <div className="w-full h-full border-2 border-solid border-light-blue flex flex-col gap-[4.4rem] items-center py-[2.4rem] px-[11rem]">
+      <div className="flex h-full w-full flex-col items-center gap-[4.4rem] border-2 border-solid border-light-blue px-[11rem] py-[2.4rem] lg:px-[8rem] md:px-[4.5rem]">
         <ProfileNav />
         {children}
       </div>

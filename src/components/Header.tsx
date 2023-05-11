@@ -118,6 +118,7 @@ export default function Header() {
           width={1000}
           height={600}
           className="absolute -z-[10] w-full h-full"
+          priority
         />
 
         <div className="absolute-center -z-[10]">

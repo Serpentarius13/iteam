@@ -162,8 +162,10 @@ const MobileNavbar = ({ session }: { session: Session | null }) => {
   );
 };
 
-export default function Navbar({ session }: { session: Session | null }) {
+export default function Navbar() {
   const [isShowingBg, setShowingBg] = useState<boolean>(false);
+
+  const { data, status } = useSession();
   useEffect(() => {
     document.body.addEventListener("wheel", (e) => {
       const { scrollY } = window;
@@ -186,11 +188,11 @@ export default function Navbar({ session }: { session: Session | null }) {
         </ul>
 
         <div className="flex items-center gap-[1.9rem] lg:hidden">
-          <ButtonDecider session={session} />
+          <ButtonDecider session={data} />
         </div>
 
         <div className=" hidden lg:block">
-          <MobileNavbar session={session} />
+          <MobileNavbar session={data} />
         </div>
       </div>
     </nav>

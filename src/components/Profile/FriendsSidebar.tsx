@@ -15,8 +15,8 @@ export default function FriendsSidebar({
 }: IFriendsSidebarProps) {
   console.log(friends);
   return (
-    <aside className="overflow-y-auto  h-[85%] overflow-x-hidden min-w-[25rem]  pr-[2rem] border-r-2 border-solid border-light-blue flex flex-col justify-between items-center relative">
-      <ul className="flex-col flex gap-[1rem] max-h-[80%] overflow-y-auto">
+    <aside className="relative  flex h-[85%] min-w-[25rem]  flex-col items-center justify-between overflow-y-auto overflow-x-hidden border-r-2 border-solid border-light-blue pr-[2rem] lg:min-w-[20rem] md:min-w-[15rem]">
+      <ul className="flex max-h-[80%] flex-col gap-[1rem] overflow-y-auto w-full">
         {friends?.length &&
           friends.map((friend) => (
             <li key={friend.id}>
@@ -26,14 +26,14 @@ export default function FriendsSidebar({
                     ? `/profile/friends/${friend.id}`
                     : `/profile/chat/${friend.chat}`
                 }
-                className="flex gap-[2rem] items-center cursor-pointer"
+                className="flex cursor-pointer items-center gap-[2rem]"
               >
                 <Image
                   src={friend.image as string}
                   alt={`${friend.name}'s avatar`}
                   width={50}
                   height={50}
-                  className="w-[5rem] aspect-square rounded-full"
+                  className="aspect-square w-[5rem] rounded-full"
                 />
 
                 <div className="flex flex-col text-white">
