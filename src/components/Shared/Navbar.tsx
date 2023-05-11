@@ -52,7 +52,7 @@ const LogOnBtns = () => {
   return (
     <>
       <Link href="/profile">
-        <div className="flex items-center gap-[0.5rem] text-light-blue text-[1.6rem]">
+        <div className="flex items-center gap-[0.5rem] text-[1.6rem] text-light-blue">
           Your profile
           <svg
             width="28"
@@ -96,7 +96,7 @@ const LogOnBtns = () => {
           signOut({ callbackUrl: "/login" }).then((r) => location.reload())
         }
       >
-        <div className="flex items-center gap-[0.5rem] text-light-blue text-[1.6rem]">
+        <div className="flex items-center gap-[0.5rem] text-[1.6rem] text-light-blue">
           Sign out
           <svg
             width="20"
@@ -117,15 +117,7 @@ const LogOnBtns = () => {
 };
 
 const ButtonDecider = ({ session }: { session: Session | null }) => {
-  return (
-    <>
-      {!session && !Object.keys(session ?? {}).length ? (
-        <Loader />
-      ) : (
-        <>{session?.user ? <LogOnBtns /> : <NavbarBtns />}</>
-      )}
-    </>
-  );
+  return <>{session?.user ? <LogOnBtns /> : <NavbarBtns />}</>;
 };
 
 const MobileNavbar = ({ session }: { session: Session | null }) => {
@@ -158,11 +150,11 @@ const MobileNavbar = ({ session }: { session: Session | null }) => {
       </label>
       <ul
         onClick={handleCloseBurger}
-        className="links w-screen h-screen fixed top-0 left-0 bg-darkest-blue text-white flex flex-col items-center justify-center gap-[3rem] !text-[1.6rem]"
+        className="links fixed left-0 top-0 flex h-screen w-screen flex-col items-center justify-center gap-[3rem] bg-darkest-blue !text-[1.6rem] text-white"
       >
         <NavbarLinks />
 
-        <li className="flex gap-[2rem] flex-col items-center">
+        <li className="flex flex-col items-center gap-[2rem]">
           <ButtonDecider session={session} />
         </li>
       </ul>
@@ -183,17 +175,17 @@ export default function Navbar({ session }: { session: Session | null }) {
 
   return (
     <nav
-      className={` py-[2.5rem] fixed top-0 z-[100] w-screen transition-all ${
+      className={` fixed top-0 z-[100] w-screen py-[2.5rem] transition-all ${
         isShowingBg && "bg-[#041e2e4d] backdrop-blur-biggy "
       }`}
     >
-      <div className="center flex justify-between  items-center">
+      <div className="center flex items-center  justify-between">
         <Logo />
-        <ul className="flex items-center gap-[5.4rem] text-white text-[1.2rem] lg:hidden">
+        <ul className="flex items-center gap-[5.4rem] text-[1.2rem] text-white lg:hidden">
           <NavbarLinks />
         </ul>
 
-        <div className="flex gap-[1.9rem] items-center lg:hidden">
+        <div className="flex items-center gap-[1.9rem] lg:hidden">
           <ButtonDecider session={session} />
         </div>
 
