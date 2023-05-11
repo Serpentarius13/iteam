@@ -2,13 +2,12 @@ import { createMessage } from "@/features/services/createMessageDto";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { Message } from "@/lib/types/utility";
-import { User } from "@prisma/client";
-import { randomUUID } from "crypto";
 
 import { getServerSession } from "next-auth/next";
 
 import prisma from "@/lib/prisma-db";
 import { NextResponse } from "next/server";
+import { pusherServer } from "@/lib/pusher";
 
 export async function PATCH(request: Request) {
   try {
@@ -35,10 +34,12 @@ export async function PATCH(request: Request) {
       roomId
     );
 
-    // Отправляю сообщение в чат
-    const res = await db.lpush(`chat:${roomId}`, toSend);
+    pusherServer.trigger(`chat-${roomId}`, "message", toSend);
 
-    return NextResponse.json(toSend)
+    // Отправляю сообщение в чат
+    await db.lpush(`chat:${roomId}`, toSend);
+
+    return NextResponse.json(toSend);
   } catch (error) {
     console.log(error);
     return new Response("Error sending a message", { status: 400 });
@@ -63,7 +64,7 @@ export async function POST(request: Request) {
     });
 
     // Возвращаю созданный чат для редиректа
-  
+
     return NextResponse.json(chat);
   } catch (error) {
     return new Response("Error creating chat", { status: 400 });

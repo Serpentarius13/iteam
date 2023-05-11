@@ -1,9 +1,8 @@
 "use client";
 
 import { Message } from "@/lib/types/utility";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import Image from "next/image";
 import axios from "axios";
 import { Session } from "next-auth/core/types";
 
@@ -11,6 +10,8 @@ import { useMutation } from "@tanstack/react-query";
 import { toaster } from "@/features/services/toaster";
 import LoadingButton from "../Shared/Buttons/LoadingButton";
 import ChatMessage from "./ChatMessage";
+
+import { pusherClient } from "@/lib/pusher";
 
 export default function Chat({
   messages: fetchedMessages = [],
@@ -38,6 +39,17 @@ export default function Chat({
       toaster.error("There was an error sending your message");
     },
   });
+
+  useEffect(() => {
+    const channel = pusherClient.subscribe(`chat-${roomId}`);
+
+    channel.bind("message", (data: Message) => {
+      if (data.userId !== session.user.id)
+        setMessages((prev) => [data, ...prev]);
+    });
+
+    return () => channel.unsubscribe();
+  }, []);
 
   return (
     <div className="p-[2rem] w-full h-[60rem] bg-darkest-blue borderline rounded-small flex-col flex gap-[1.4rem] justify-between max-h-[85%] ">

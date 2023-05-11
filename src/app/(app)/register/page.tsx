@@ -1,10 +1,14 @@
-import RegistrationForm from "@/components/Forms/RegistrationForm";
 import SocialButtons from "@/components/Forms/SocialButtons";
 import Button from "@/components/Shared/Buttons/Button";
 import { getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const RegistrationForm = dynamic(
+  () => import("@/components/Forms/RegistrationForm")
+);
 
 export default async function Register() {
   return (

@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
+import Header from "@/components/Header";
 
-const Header = dynamic(() => import("@/components/Header"));
 const Actions = dynamic(() => import("@/components/Actions"));
 const About = dynamic(() => import("@/components/About"));
 const WIP = dynamic(() => import("@/components/WIP"));

@@ -1,15 +1,15 @@
-
-import Circle from "@/components/Shared/Absolutes/Circle";
 import Button from "@/components/Shared/Buttons/Button";
-import Earth from "@/components/Three/Earth";
+
 import Image from "next/image";
 import Typewriter from "./Shared/Typewriter";
 import Aura from "./Shared/Absolutes/Aura";
-import Ellipsis from "./Shared/Absolutes/Ellipsis";
-import LinkCircle from "./Shared/Absolutes/LinkCircle";
+
 import BigStar from "./Shared/Absolutes/BigStar";
 import Rhombus from "./Shared/Absolutes/Rhombus";
-import { useEffect, useRef, useState } from "react";
+
+import dynamic from "next/dynamic";
+
+const Earth = dynamic(() => import("@/components/Three/Earth"));
 
 interface IDeveloperProps {
   image: string;
@@ -98,12 +98,8 @@ const robertFox: IDeveloperProps = {
 };
 
 export default function Header() {
- 
   return (
-    <header
-      className='center relative  w-full h-screen flex  justify-center lg:flex-col lg:mt-[10rem]  transition-all'
-  
-    >
+    <header className="center relative  w-full h-screen flex  justify-center lg:flex-col lg:mt-[10rem]  transition-all">
       <div className="flex flex-col gap-[3rem] text-white flex-1 text-[3.6rem] justify-center h-full items-start">
         <Typewriter text="HELLO WORLD" />
 

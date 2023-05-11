@@ -1,7 +1,8 @@
-import RegistrationForm from "@/components/Forms/RegistrationForm";
-import SignInForm from "@/components/Forms/SignInForm";
+import dynamic from 'next/dynamic'
 import SocialButtons from "@/components/Forms/SocialButtons";
 import Link from "next/link";
+
+const SignInForm = dynamic(() => import("@/components/Forms/SignInForm"))
 
 export default async function Login() {
   return (
