@@ -5,7 +5,6 @@ import Logo from "@/components/Shared/Logo";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Loader from "./Load/Loader";
 
 import { Session } from "next-auth/core/types";
 
@@ -93,7 +92,7 @@ const LogOnBtns = () => {
 
       <button
         onClick={() =>
-          signOut({ callbackUrl: "/login" }).then((r) => location.reload())
+          signOut({ callbackUrl: "/login" }).then(() => location.reload())
         }
       >
         <div className="flex items-center gap-[0.5rem] text-[1.6rem] text-light-blue">
@@ -165,9 +164,9 @@ const MobileNavbar = ({ session }: { session: Session | null }) => {
 export default function Navbar() {
   const [isShowingBg, setShowingBg] = useState<boolean>(false);
 
-  const { data, status } = useSession();
+  const { data } = useSession();
   useEffect(() => {
-    document.body.addEventListener("wheel", (e) => {
+    document.body.addEventListener("wheel", () => {
       const { scrollY } = window;
       if (scrollY > 200) {
         setShowingBg(true);

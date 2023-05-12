@@ -11,6 +11,9 @@ const nextConfig = {
       "avatars.githubusercontent.com",
     ],
   },
+
+  reactStrictMode: true,
+  
 };
 
 module.exports = nextConfig;
