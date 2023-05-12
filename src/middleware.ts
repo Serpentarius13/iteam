@@ -9,13 +9,10 @@ export async function middleware(request: Request | any) {
 
   let decoded;
 
-
-
-
   if (session) {
     decoded = await decode({
       token: session,
-      secret: process.env.NEXTAUTH_SECRET as string,
+      secret: process.env.JWT_SECRET as string,
     });
   }
 
