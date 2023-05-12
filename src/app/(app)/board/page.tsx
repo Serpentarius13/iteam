@@ -8,12 +8,12 @@ import professions from "@/features/constants/professions";
 import useTags from "@/features/hooks/useTags";
 import { TTag } from "@/lib/types/utility";
 import { User } from "@prisma/client";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
+
 import { toaster } from "@/features/services/toaster";
 import BoardUser from "@/components/Board/BoardUser";
 
@@ -63,19 +63,18 @@ export default function Board() {
     onError() {
       toaster.error("Error getting users");
     },
-  
   });
 
   return (
-    <main className="w-screen h-screen flex items-center justify-center pt-[10rem]">
-      <div className="center h-[90%] flex items-start justify-start flex-col">
-        <div className="min-h-[15rem] relative w-full flex flex-col justify-start gap-[2rem]">
+    <main className="flex h-screen w-screen items-center justify-center pt-[10rem]">
+      <div className="center flex h-[90%] flex-col items-start justify-start">
+        <div className="relative flex min-h-[15rem] w-full flex-col justify-start gap-[2rem]">
           {/* Input */}
 
-          <div className="w-full flex items-center gap-[2rem]">
+          <div className="flex w-full items-center gap-[2rem]">
             <input
               type="search"
-              className="flex-1 bg-white border-2 border-light-blue border-solid rounded-small p-[1rem] text-[1.6rem]"
+              className="flex-1 rounded-small border-2 border-solid border-light-blue bg-white p-[1rem] text-[1.6rem]"
             />
 
             <Button variant="default" onClick={() => refetch()}>
@@ -101,19 +100,17 @@ export default function Board() {
           <LoadingScreen isLoading={isLoading || loadingUsers} />
         </div>
 
-        <div className="text-white text-[2rem] min-h-[30rem]  w-full relative break-words pt-[3rem] flex gap-[2rem] flex-wrap">
+        <div className="relative flex min-h-[30rem]  w-full flex-wrap gap-[2rem] break-words pt-[3rem] text-[2rem] text-white">
           {users?.length ? (
             users.map((user) => (
               <BoardUser {...user} key={user.id} refetch={refetch} />
             ))
           ) : (
-            <h2 className="form-title text-start pt-[2rem]">
+            <h2 className="form-title pt-[2rem] text-start">
               {" "}
               Nothing there...
             </h2>
           )}
-
-         
         </div>
       </div>
     </main>

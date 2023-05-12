@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma-db";
 import { FriendRequest, TTag } from "@/lib/types/utility";
 import { NextResponse } from "next/server";
-import { User } from "@prisma/client";
+import { Friends, User } from "@prisma/client";
 import { db } from "@/lib/db";
 
 export async function POST(request: Request) {
@@ -35,9 +35,22 @@ export async function POST(request: Request) {
       users = await prisma.user.findMany({ where: { profession } });
     }
 
+    const friends = await prisma.friends.findMany({
+      where: {
+        OR: [{ friendId: session.user.id }, { userId: session.user.id }],
+      },
+    });
+
     users = users.filter((el) => el.id !== session.user.id);
     users = await Promise.all(
       users.map(async (user) => {
+        if (
+          !!friends.find(
+            (friend) => friend.friendId == user.id || friend.userId == user.id
+          )
+        ) {
+          return { ...user, sentRequest: true };
+        }
         const requests = await prisma?.friendRequest.findMany({
           where: { owner: user.id },
         });
