@@ -9,6 +9,9 @@ export async function middleware(request: Request | any) {
 
   let decoded;
 
+
+
+
   if (session) {
     decoded = await decode({
       token: session,
